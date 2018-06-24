@@ -1,0 +1,48 @@
+{
+  "compatibleVersion": 3,
+  "bundleVersion": 1,
+  "icon": "icon.png",
+  "commands": [
+    {
+      "name": "Automatically Typeset Text Layers",
+      "handlers": {
+        "actions": {
+          "SelectionChanged.finish": "onSelectionFinish"
+        }
+      },
+      "script": "auto.js"
+    },
+    {
+      "name": "Set Character Spacing",
+      "shortcut": "",
+      "identifier": "setCharacterSpacing",
+      "script": "setCharacterSpacing.js"
+    },
+    {
+      "name": "Set Line Height",
+      "shortcut": "",
+      "identifier": "setLineHeight",
+      "script": "setLineHeight.js"
+    },
+    {
+      "name": "Register Typesettings",
+      "identifier": "register",
+      "script": "./register.js"
+    },
+    {
+      "name": "Preferences",
+      "identifier": "preferences",
+      "script": "./preferences.js"
+    }
+  ],
+  "menu": {
+    "title": "Typesettings",
+    "items": [
+      "setCharacterSpacing",
+      "setLineHeight",
+      "-",
+      "register",
+      "preferences"
+    ]
+  }
+}

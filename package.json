@@ -1,0 +1,35 @@
+{
+  "name": "typesettings-sketch-plugin",
+  "version": "0.0.0",
+  "description": "A quest for consistency",
+  "engines": {
+    "sketch": ">=3.0"
+  },
+  "skpm": {
+    "name": "Typesettings",
+    "manifest": "src/manifest.json",
+    "main": "typesettings.sketchplugin",
+    "assets": [
+      "assets/**/*"
+    ]
+  },
+  "scripts": {
+    "build": "skpm-build",
+    "watch": "skpm-build --watch",
+    "start": "skpm-build --watch --run",
+    "postinstall": "npm run build && skpm-link"
+  },
+  "dependencies": {
+    "@skpm/fs": "^0.1.2",
+    "@skpm/path": "^0.1.0"
+  },
+  "devDependencies": {
+    "@skpm/builder": "^0.5.2"
+  },
+  "homepage": "https://github.com/buames/typesettings-sketch-plugin",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buames/typesettings-sketch-plugin.git"
+  },
+  "author": "buames <jamesmakeseyes@gmail.com>"
+}

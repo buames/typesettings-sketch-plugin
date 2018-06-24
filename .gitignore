@@ -1,0 +1,9 @@
+lib
+dist
+build
+node_modules
+.npm
+*.log
+*.lock
+.DS_Store
+typesettings.sketchplugin
