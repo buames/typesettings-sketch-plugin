@@ -20,19 +20,31 @@ export default (context) => {
 
   // Get all of the font families from the text layers
   const fontFamilies = pluck(textLayers, 'fontFamily')
-  const fontNames = pluck(textLayers, 'fontName')
 
   // Create the typesettings for each font family
   const typesettings = fontFamilies.map(family => {
     const obj = { }
-    textLayers
-      .filter((layer) => layer.fontFamily === family)
-      .map(layer => {
+
+    // Create the typesettings for each family + size + casing
+    const layers = textLayers .filter((layer) => layer.fontFamily === family)
+    layers.map(layer => {
         obj[layer.fontName] = obj[layer.fontName] || { }
-        obj[layer.fontName][layer.fontSize] = obj[layer.fontName][layer.fontSize] || layer.metrics
-        obj[layer.fontName][layer.fontSize][layer.casing] = obj[layer.fontName][layer.fontSize][layer.casing] || layer.spacings
+        obj[layer.fontName][layer.fontSize] = obj[layer.fontName][layer.fontSize] || {
+          fontFamily: layer.fontFamily,
+          fontName: layer.fontName,
+          fontDisplayName: layer.fontDisplayName,
+          fontPostscriptName: layer.fontPostscriptName,
+          fontSize: layer.fontSize
+        }
+        obj[layer.fontName][layer.fontSize][layer.casing] = obj[layer.fontName][layer.fontSize][layer.casing] || {
+          characterSpacing: layer.characterSpacing,
+          lineHeight: layer.lineHeight,
+          paragraphSpacing: layer.paragraphSpacing
+        }
       })
 
+      // Store the each of the font names. Later, this will become download links
+      const fontNames = pluck(layers, 'fontName')
       const fonts = { }
       fontNames.forEach(font => {
         fonts[font] = ''

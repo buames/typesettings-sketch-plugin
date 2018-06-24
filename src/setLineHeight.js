@@ -23,7 +23,7 @@ export default (context) => {
     }
 
     const yPos = textLayer.sketchObject.absoluteRect().rulerY()
-    textLayer.sketchObject.setLineHeight(settings.lineHeight || null)
+    textLayer.sketchObject.setLineHeight(settings.lineHeight)
     textLayer.sketchObject.absoluteRect().setRulerY(yPos)
     counter.set++
   })

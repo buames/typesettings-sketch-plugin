@@ -22,7 +22,7 @@ export default (context) => {
       return counter.skipped++
     }
 
-    textLayer.sketchObject.setCharacterSpacing(settings.characterSpacing || null)
+    textLayer.sketchObject.setCharacterSpacing(settings.characterSpacing)
     counter.set++
   })
 

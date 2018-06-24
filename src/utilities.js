@@ -13,7 +13,6 @@ export const pluck = (arr, prop) => {
 /* =========================================================
     Plugin Preferences
 ========================================================= */
-
 export const preferences = {
   pluginDefinedDirectory: 'Library/Application Support/com.bohemiancoding.sketch3/Plugins/typesettings.sketchplugin/Contents/Resources',
   userDefinedDirectory: Settings.settingForKey('userDefinedDirectory') || 'Desktop',
@@ -60,19 +59,13 @@ export const process = textLayer => {
   return {
     fontFamily: String(attrs.NSFont.familyName()),
     fontName: String(attrs.NSFont.fontName()),
+    fontDisplayName: String(attrs.NSFont.displayName()),
+    fontPostscriptName: String(layer.fontPostscriptName()),
     fontSize: Number(layer.fontSize()),
     casing: TEXT_TRANSFORM[attrs.MSAttributedStringTextTransformAttribute || 0],
-    metrics: {
-      fontSize: Number(layer.fontSize()),
-      fontName: String(attrs.NSFont.fontName()),
-      fontDisplayName: String(attrs.NSFont.displayName()),
-      fontPostscriptName: String(layer.fontPostscriptName())
-    },
-    spacings: {
-      characterSpacing: layer.characterSpacing() ? Number(layer.characterSpacing()) : layer.characterSpacing(),
-      lineHeight: Number(layer.lineHeight()),
-      paragraphSpacing: Number(attrs.NSParagraphStyle.paragraphSpacing())
-    }
+    characterSpacing: layer.characterSpacing() ? Number(layer.characterSpacing()) : layer.characterSpacing(),
+    lineHeight: Number(layer.lineHeight()),
+    paragraphSpacing: Number(attrs.NSParagraphStyle.paragraphSpacing())
   }
 }
 
