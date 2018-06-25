@@ -10,7 +10,8 @@
     "manifest": "src/manifest.json",
     "main": "typesettings.sketchplugin",
     "assets": [
-      "assets/**/*"
+      "assets/**/*",
+      "directory/**/*"
     ]
   },
   "scripts": {

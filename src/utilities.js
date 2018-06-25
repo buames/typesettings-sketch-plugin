@@ -14,7 +14,8 @@ export const pluck = (arr, prop) => {
     Plugin Preferences
 ========================================================= */
 export const preferences = {
-  pluginDefinedDirectory: 'Library/Application Support/com.bohemiancoding.sketch3/Plugins/typesettings.sketchplugin/Contents/Resources',
+  pluginDefinedDirectory: 'Development/typesettings-sketch-plugin/directory',
+  // pluginDefinedDirectory: 'Library/Application Support/com.bohemiancoding.sketch3/Plugins/typesettings.sketchplugin/Contents/Resources',
   userDefinedDirectory: Settings.settingForKey('userDefinedDirectory') || 'Desktop',
   allowsAutoKerning: Settings.settingForKey('allowsAutoKerning') || false,
   allowsAutoLineHeight: Settings.settingForKey('allowsAutoLineHeight') || false
@@ -36,11 +37,6 @@ export const TEXT_TRANSFORM = {
   0: 'normalcase',
   1: 'uppercase',
   2: 'lowercase'
-}
-
-export const TYPESETTINGS = {
-  LINE_HEIGHT: 'line-height',
-  CHARACTER_SPACING: 'character-spacing'
 }
 
 export const getTextLayers = selection => {
@@ -92,6 +88,11 @@ export const storage = (fontFamily) => {
   }
 
   return `${ NSHomeDirectory() }/${ preferences.userDefinedDirectory }/${ fileName }`
+}
+
+export const getFontFamiliesDirectory = () => {
+  return `${ NSHomeDirectory() }/Development/typesettings-sketch-plugin/directory/directory.json`
+  // return context.plugin.urlForResourceNamed('directory.json').path()
 }
 
 export const fetch = (fontFamily) => {
@@ -158,12 +159,41 @@ export const createInput = (value, yPos, placeholder = '') => {
 }
 
 export const createLabel = (value, yPos) => {
-	const label = NSTextField.alloc().initWithFrame(NSMakeRect(0, yPos, 300, 16))
-	label.setStringValue(value)
-	label.setFont(NSFont.boldSystemFontOfSize(12))
-	label.setBezeled(false)
-	label.setDrawsBackground(false)
-	label.setEditable(false)
-	label.setSelectable(false)
-	return label
+  const label = NSTextField.alloc().initWithFrame(NSMakeRect(0, yPos, 300, 16))
+  label.setStringValue(value)
+  label.setFont(NSFont.boldSystemFontOfSize(12))
+  label.setBezeled(false)
+  label.setDrawsBackground(false)
+  label.setEditable(false)
+  label.setSelectable(false)
+  return label
+}
+
+export const createSelect = (alert, items, selectedIndex, yPos) => {
+  const view = NSComboBox.alloc().initWithFrame(NSMakeRect(0, yPos, 300, 28))
+  view.addItemsWithObjectValues(items)
+  view.selectItemAtIndex(selectedIndex || 0)
+  view.completes = true
+
+  alert.content.addSubview(view)
+  yPos = CGRectGetMaxY(alert.content.subviews().lastObject().frame())
+  return { view, yPos }
+}
+
+export const createPrompt = (title, buttons) => {
+  const alert = COSAlertWindow.new()
+  alert.setMessageText(title)
+
+  const content = NSView.alloc().init()
+  content.setFlipped(true)
+
+  buttons.forEach(button => alert.addButtonWithTitle(button))
+
+  const present = (yPos) => {
+    content.frame = NSMakeRect(0,0, 300, yPos + 24)
+    alert.addAccessoryView(content)
+    return alert.runModal()
+  }
+
+  return { present, alert, content }
 }

@@ -33,6 +33,11 @@
       "name": "Preferences",
       "identifier": "preferences",
       "script": "./preferences.js"
+    },
+    {
+      "name": "Install Fonts",
+      "identifier": "fontInstaller",
+      "script": "./fontInstaller.js"
     }
   ],
   "menu": {
@@ -42,6 +47,7 @@
       "setLineHeight",
       "-",
       "register",
+      "fontInstaller",
       "preferences"
     ]
   }
