@@ -1,12 +1,9 @@
-import sketch from 'sketch/dom'
 import UI from 'sketch/ui'
 import fs from '@skpm/fs'
 import merge from 'deepmerge'
 import {
-  getTextLayers,
-  pluck,
-  storage, // rename
-  getFontFamiliesDirectory
+  getJSTextLayers,
+  pluck
 } from './utilities'
 import TextLayer from './TextLayer'
 import Typesettings from './Typesettings'
@@ -52,15 +49,14 @@ const promptForFontUrls = (fontNames) => {
 }
 
 export default (context) => {
-  const selection = sketch.getSelectedDocument().selectedLayers.layers
-  const selectedTextLayers = getTextLayers(selection)
+  const selection = getJSTextLayers(context.selection)
 
-  if (typeof selectedTextLayers === 'string') {
-    return UI.message(selectedTextLayers)
+  if (selection.length === 0) {
+    return UI.message('You need to select atleast 1 text layer')
   }
 
   // Process the text layers
-  const textLayers = selectedTextLayers.map(TextLayer.create)
+  const textLayers = selection.map(TextLayer.raw)
 
   // Get all of the font families from the text layers
   const fontFamilies = pluck(textLayers, 'fontFamily')
@@ -71,7 +67,7 @@ export default (context) => {
     // Create the typesettings for each family + size + casing
     const variants = textLayers .filter((textLayer) => textLayer.fontFamily === family)
 
-    const settings = Typesettings.create(variants)
+    const settings = merge.all(variants.map(TextLayer.transform))
 
     // Get all of the font names from the variants and prompt for download urls
     const fontNames = pluck(variants, 'fontName')

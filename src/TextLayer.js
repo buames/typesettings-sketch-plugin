@@ -4,7 +4,7 @@ export const TEXT_TRANSFORM = {
   2: 'lowercase'
 }
 
-const create = textLayer => {
+const raw = textLayer => {
   const layer = textLayer.sketchObject || textLayer
   const attrs = layer.style().textStyle().attributes()
   return {
@@ -20,8 +20,25 @@ const create = textLayer => {
   }
 }
 
+const transform = textLayer => ({
+  [textLayer.fontName]: {
+    fontFamily: textLayer.fontFamily,
+    fontName: textLayer.fontName,
+    fontDisplayName: textLayer.fontDisplayName,
+    fontPostscriptName: textLayer.fontPostscriptName,
+    [textLayer.casing]: {
+      [textLayer.fontSize]: {
+        characterSpacing: textLayer.characterSpacing,
+        lineHeight: textLayer.lineHeight,
+        paragraphSpacing: textLayer.paragraphSpacing
+      }
+    }
+  }
+})
+
 const TextLayer = {
-  create
+  raw,
+  transform
 }
 
 export default TextLayer

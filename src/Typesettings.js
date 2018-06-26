@@ -1,29 +1,34 @@
 import fs from '@skpm/fs'
 import merge from 'deepmerge'
-import { storage, getFontFamiliesDirectory } from './utilities'
+import TextLayer from './TextLayer'
+import { getTypesettingsFilePath, getFontFamiliesDirectory } from './utilities'
 
-// Create the typesettings
-const create = variants => merge.all(
-  variants.map(variant => ({
-    [variant.fontName]: {
-      fontFamily: variant.fontFamily,
-      fontName: variant.fontName,
-      fontDisplayName: variant.fontDisplayName,
-      fontPostscriptName: variant.fontPostscriptName,
-      [variant.casing]: {
-        [variant.fontSize]: {
-          characterSpacing: variant.characterSpacing,
-          lineHeight: variant.lineHeight,
-          paragraphSpacing: variant.paragraphSpacing
-        }
-      }
-    }
-  }))
-)
+let storage = null
+
+const fetchFamilySettings = fontFamily => {
+  const filePath = getTypesettingsFilePath(fontFamily)
+  if (!fs.existsSync(filePath)) return
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'))
+}
+
+// Returns typesettings for a given text layer
+const fetch = (layer) => {
+  const { fontFamily, fontSize, fontName, casing } = TextLayer.raw(layer)
+
+  if (!storage || (storage.family !== fontFamily)) {
+    storage = fetchFamilySettings(fontFamily)
+  }
+
+  if (!storage || !storage[fontName] || !storage[fontName][fontSize] || !storage[fontName][fontSize][casing]) {
+    return
+  }
+
+  return storage[fontName][fontSize][casing]
+}
 
 // Save or update settings
 const save = ({ family, settings }) => {
-  const filePath = storage(family)
+  const filePath = getTypesettingsFilePath(family) // rename family to fontFamily or something consistent
   const newSettings = {
     family,
     ...settings,
@@ -80,7 +85,7 @@ const registerFamily = ({ family, urls }) => {
 }
 
 const Typesettings = {
-  create,
+  fetch,
   save,
   registerFamily
 }

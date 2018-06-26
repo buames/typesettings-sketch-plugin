@@ -1,4 +1,5 @@
 import Settings from 'sketch/settings'
+import { fromNative } from 'sketch/dom'
 import fs from '@skpm/fs'
 
 /* =========================================================
@@ -33,53 +34,22 @@ export const savePreferences = newPrefs => {
     Typesettings
 ========================================================= */
 
-export const TEXT_TRANSFORM = {
-  0: 'normalcase',
-  1: 'uppercase',
-  2: 'lowercase'
+export const getMSTextLayers = selection => {
+  const predicate = NSPredicate.predicateWithFormat('className == %@', 'MSTextLayer')
+  return selection.filteredArrayUsingPredicate(predicate)
 }
 
-export const getTextLayers = selection => {
-  const textLayers = selection.filter((layer) => layer.type === 'Text')
+export const getJSTextLayers = selection => {
+  if (Array.isArray(selection)) {
+    return selection.filter((layer) => layer.type === 'Text')
+  }
   
-  if (selection.length == 0 || textLayers.length == 0) {
-    return 'You need to select atleast 1 text layer'
-  }
-
-  return textLayers
+  const arr = [ ]
+  getMSTextLayers(selection).forEach(layer => arr.push(fromNative(layer)))
+  return arr
 }
 
-export const process = textLayer => {
-  const layer = textLayer.sketchObject || textLayer
-  const attrs = layer.style().textStyle().attributes()
-  return {
-    fontFamily: String(attrs.NSFont.familyName()),
-    fontName: String(attrs.NSFont.fontName()),
-    fontDisplayName: String(attrs.NSFont.displayName()),
-    fontPostscriptName: String(layer.fontPostscriptName()),
-    fontSize: Number(layer.fontSize()),
-    casing: TEXT_TRANSFORM[attrs.MSAttributedStringTextTransformAttribute || 0],
-    characterSpacing: layer.characterSpacing() ? Number(layer.characterSpacing()) : layer.characterSpacing(),
-    lineHeight: Number(layer.lineHeight()),
-    paragraphSpacing: Number(attrs.NSParagraphStyle.paragraphSpacing())
-  }
-}
-
-export const getTypesettingForTextLayer = (storage, textLayer) => {
-  const { fontFamily, fontSize, fontName, casing } = process(textLayer)
-
-    if (!storage || (storage.family !== fontFamily)) {
-      storage = fetch(fontFamily)
-    }
-
-    if (!storage || !storage[fontName] || !storage[fontName][fontSize] || !storage[fontName][fontSize][casing]) {
-      return
-    }
-
-    return storage[fontName][fontSize][casing]
-}
-
-export const storage = (fontFamily) => {
+export const getTypesettingsFilePath = (fontFamily) => {
   const fileName = `${ fontFamily.replace(/\s/g, '') }.json`
   const pluginDefinedDirectory = `${ NSHomeDirectory() }/${ preferences.pluginDefinedDirectory }/${ fileName }`
 
@@ -93,18 +63,6 @@ export const storage = (fontFamily) => {
 export const getFontFamiliesDirectory = () => {
   return `${ NSHomeDirectory() }/Development/typesettings-sketch-plugin/directory/families.json`
   // return context.plugin.urlForResourceNamed('directory.json').path()
-}
-
-export const fetch = (fontFamily) => {
-  const filePath = storage(fontFamily)
-  if (!fs.existsSync(filePath)) return
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'))
-}
-
-export const save = (settings) => {
-  const filePath = storage(settings.family)
-  fs.writeFileSync(filePath, JSON.stringify(settings))
-  return `Exported ${ settings.family } typesettings`
 }
 
 /* =========================================================

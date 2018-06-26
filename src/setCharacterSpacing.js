@@ -1,28 +1,23 @@
-import sketch from 'sketch/dom'
 import UI from 'sketch/ui'
-import {
-  getTextLayers,
-  getTypesettingForTextLayer
-} from './utilities'
+import Typesettings from './Typesettings'
+import { getMSTextLayers } from './utilities'
 
 export default (context) => {
-  const storage = null
   const counter = { set: 0, skipped: 0 }
-  const selection = sketch.getSelectedDocument().selectedLayers.layers
-  const textLayers = getTextLayers(selection)
+  const selection = getMSTextLayers(context.selection)
 
-  if (typeof textLayers === 'string') {
-    return UI.message(textLayers)
+  if (selection.length === 0) {
+    return UI.message('You need to select atleast 1 text layer')
   }
 
-  textLayers.forEach(textLayer => {
-    const settings = getTypesettingForTextLayer(storage, textLayer)
+  selection.forEach(layer => {
+    const settings = Typesettings.fetch(layer)
 
     if (!settings) {
       return counter.skipped++
     }
 
-    textLayer.sketchObject.setCharacterSpacing(settings.characterSpacing)
+    layer.setCharacterSpacing(settings.characterSpacing)
     counter.set++
   })
 
