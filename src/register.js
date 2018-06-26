@@ -84,7 +84,7 @@ export default (context) => {
   const done = typesettings.map(ts => {
 
     // Save / update the typesettings
-    Typesettings.save(ts)
+    Typesettings.save(ts, context.plugin.version())
 
     // Update the families.json file if there were download urls provided
     Typesettings.registerFamily(ts)

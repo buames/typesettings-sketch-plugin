@@ -12,26 +12,33 @@ const fetchFamilySettings = fontFamily => {
 }
 
 // Returns typesettings for a given text layer
-const fetch = (layer) => {
+const fetch = (layer, pluginVersion) => {
   const { fontFamily, fontSize, fontName, casing } = TextLayer.raw(layer)
 
   if (!storage || (storage.family !== fontFamily)) {
     storage = fetchFamilySettings(fontFamily)
   }
 
-  if (!storage || !storage[fontName] || !storage[fontName][fontSize] || !storage[fontName][fontSize][casing]) {
-    return
+  // Current Version
+  if (storage && storage.compatibleVersion >= pluginVersion.UTF8String()) {
+    if (!storage[fontName] || !storage[fontName][casing] || !storage[fontName][casing][fontSize]) return
+    return storage[fontName][casing][fontSize]
   }
 
-  return storage[fontName][fontSize][casing]
+  // Legacy: Version 0.0.2 and below
+  if (storage && !storage.compatibleVersion) {
+    if (!storage[fontName] || !storage[fontName][fontSize] || !storage[fontName][fontSize][casing]) return
+    return storage[fontName][fontSize][casing]
+  }
 }
 
 // Save or update settings
-const save = ({ family, settings }) => {
+const save = ({ family, settings }, pluginVersion) => {
   const filePath = getTypesettingsFilePath(family) // rename family to fontFamily or something consistent
   const newSettings = {
     family,
     ...settings,
+    compatibleVersion: pluginVersion.UTF8String(),
     lastUpdated: new Date().toISOString()
   }
 
