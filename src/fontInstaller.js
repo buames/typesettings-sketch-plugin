@@ -19,7 +19,7 @@ const isFontInstalled = fontFamily => {
 
 // Returns font families available for download
 const getFamilies = (context) => {
-  const filePath = context.plugin.urlForResourceNamed('directory.json').path()
+  const filePath = context.plugin.urlForResourceNamed('families.json').path()
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
 }
 

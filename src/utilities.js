@@ -91,7 +91,7 @@ export const storage = (fontFamily) => {
 }
 
 export const getFontFamiliesDirectory = () => {
-  return `${ NSHomeDirectory() }/Development/typesettings-sketch-plugin/directory/directory.json`
+  return `${ NSHomeDirectory() }/Development/typesettings-sketch-plugin/directory/families.json`
   // return context.plugin.urlForResourceNamed('directory.json').path()
 }
 
@@ -159,13 +159,9 @@ export const createInput = (value, yPos, placeholder = '') => {
 }
 
 export const createLabel = (value, yPos) => {
-  const label = NSTextField.alloc().initWithFrame(NSMakeRect(0, yPos, 300, 16))
-  label.setStringValue(value)
+  const label = NSText.alloc().initWithFrame(NSMakeRect(0, yPos, 300, 16))
+  label.setString(value)
   label.setFont(NSFont.boldSystemFontOfSize(12))
-  label.setBezeled(false)
-  label.setDrawsBackground(false)
-  label.setEditable(false)
-  label.setSelectable(false)
   return label
 }
 
