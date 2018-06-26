@@ -23,7 +23,7 @@ const getFamilies = (context) => {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'))
 }
 
-// Installs a given given an array of [ fontName, downloadUrl]
+// Installs a given an array of [ fontName, downloadUrl]
 const installFont = ([fontName, downloadUrl]) => {
   const fileName = `${ fontName }${ path.extname(downloadUrl) }`
   const localFontFilePath = `${ localFontDirectory }/${ fileName }`

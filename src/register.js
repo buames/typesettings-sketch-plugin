@@ -1,18 +1,55 @@
 import sketch from 'sketch/dom'
 import UI from 'sketch/ui'
 import fs from '@skpm/fs'
+import merge from 'deepmerge'
 import {
   getTextLayers,
-  process,
   pluck,
   storage, // rename
   getFontFamiliesDirectory
 } from './utilities'
+import TextLayer from './TextLayer'
+import Typesettings from './Typesettings'
 
 const getLastYPosition = (view, spacing = 0) => (
   view.subviews().lastObject() ?
     CGRectGetMaxY(view.subviews().lastObject().frame()) + spacing : 0
 )
+
+const promptForFontUrls = (fontNames) => {
+  const alertContent = NSView.alloc().init()
+  alertContent.setFlipped(true)
+
+  fontNames.forEach((fontName, index) => {
+    const fontNameInput = NSTextField.alloc().init()
+    fontNameInput.setFrame(NSMakeRect(0, getLastYPosition(alertContent, 4), 300, 24))
+    fontNameInput.setPlaceholderString(fontName)
+    fontNameInput.tag = index
+    alertContent.addSubview(fontNameInput)
+  })
+
+  alertContent.frame = NSMakeRect(0,0, 300, getLastYPosition(alertContent, 24))
+
+  const alert = COSAlertWindow.new()
+  alert.setMessageText('Add download urls')
+  alert.addButtonWithTitle('Add')
+  alert.addButtonWithTitle('Skip')
+  alert.addAccessoryView(alertContent)
+
+    // Open dialog and skip if skip is clicked
+  if (alert.runModal() != NSAlertFirstButtonReturn) return
+
+  const urls = { }
+  alertContent.subviews().forEach((input, index) => {
+    if (input.stringValue() == '') return
+    urls[fontNames[index]] = String(input.stringValue())
+  })
+
+  // Only return the urls obj if there is something to return
+  if (Object.keys(urls).length > 0) {
+    return urls
+  }
+}
 
 export default (context) => {
   const selection = sketch.getSelectedDocument().selectedLayers.layers
@@ -23,93 +60,40 @@ export default (context) => {
   }
 
   // Process the text layers
-  const textLayers = selectedTextLayers.map(process)
+  const textLayers = selectedTextLayers.map(TextLayer.create)
 
   // Get all of the font families from the text layers
   const fontFamilies = pluck(textLayers, 'fontFamily')
 
   // Create the typesettings for each font family
   const typesettings = fontFamilies.map(family => {
-    const obj = { }
 
     // Create the typesettings for each family + size + casing
-    const layers = textLayers .filter((layer) => layer.fontFamily === family)
-    layers.map(layer => {
-      obj[layer.fontName] = obj[layer.fontName] || { }
+    const variants = textLayers .filter((textLayer) => textLayer.fontFamily === family)
 
-      obj[layer.fontName][layer.fontSize] = obj[layer.fontName][layer.fontSize] || {
-        fontFamily: layer.fontFamily,
-        fontName: layer.fontName,
-        fontDisplayName: layer.fontDisplayName,
-        fontPostscriptName: layer.fontPostscriptName,
-        fontSize: layer.fontSize
-      }
+    const settings = Typesettings.create(variants)
 
-      obj[layer.fontName][layer.fontSize][layer.casing] = obj[layer.fontName][layer.fontSize][layer.casing] || {
-        characterSpacing: layer.characterSpacing,
-        lineHeight: layer.lineHeight,
-        paragraphSpacing: layer.paragraphSpacing
-      }
-    })
-
-    const fontNames = pluck(layers, 'fontName')
-
-    const alertContent = NSView.alloc().init()
-    alertContent.setFlipped(true)
-
-    fontNames.forEach((fontName, index) => {
-      const fontNameInput = NSTextField.alloc().init()
-      fontNameInput.setFrame(NSMakeRect(0, getLastYPosition(alertContent, 4), 300, 24))
-      fontNameInput.setPlaceholderString(fontName)
-      fontNameInput.tag = index
-      alertContent.addSubview(fontNameInput)
-    })
-
-    alertContent.frame = NSMakeRect(0,0, 300, getLastYPosition(alertContent, 24))
-
-    const alert = COSAlertWindow.new()
-    alert.setMessageText('Add download urls')
-    alert.addButtonWithTitle('Add')
-    alert.addButtonWithTitle('Skip')
-    alert.addAccessoryView(alertContent)
-
-    	// Open dialog and skip if skip is clicked
-    if (alert.runModal() != NSAlertFirstButtonReturn) return
-
-    const variants = { }
-    alertContent.subviews().forEach((input, index) => {
-      variants[fontNames[index]] = input.stringValue()
-    })
-
-    const lastUpdated = new Date().toISOString()
+    // Get all of the font names from the variants and prompt for download urls
+    const fontNames = pluck(variants, 'fontName')
+    const fontUrls = promptForFontUrls(fontNames)
 
     return {
       family,
-      lastUpdated,
-      variants,
-      ...obj
+      settings,
+      urls: fontUrls,
     }
   })
 
   // Save the typesettings and update the directory
   const done = typesettings.map(ts => {
-    const { family, lastUpdated, variants, ...rest } = ts
 
-    const settingsFilePath = storage(family)
-    fs.writeFileSync(settingsFilePath, JSON.stringify({
-      family, lastUpdated, ...rest
-    }))
+    // Save / update the typesettings
+    Typesettings.save(ts)
 
-    const familiesFilePath = getFontFamiliesDirectory()
-    const familiesFileContent = JSON.parse(fs.readFileSync(familiesFilePath, 'utf8'))
-    familiesFileContent.push({
-      family,
-      lastUpdated,
-      variants
-    })
+    // Update the families.json file if there were download urls provided
+    Typesettings.registerFamily(ts)
 
-    fs.writeFileSync(familiesFilePath, JSON.stringify(familiesFileContent))
-    return `Exported ${ family } typesettings`
+    return `Exported ${ ts.family } typesettings`
   })
   
   const msg = (done.length == 1) ? done.join('') : `Exported typesettings for ${ done.length } fonts`

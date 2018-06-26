@@ -22,7 +22,8 @@
   },
   "dependencies": {
     "@skpm/fs": "^0.1.2",
-    "@skpm/path": "^0.1.0"
+    "@skpm/path": "^0.1.0",
+    "deepmerge": "^2.1.1"
   },
   "devDependencies": {
     "@skpm/builder": "^0.5.2"
