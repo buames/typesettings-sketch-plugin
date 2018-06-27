@@ -2,7 +2,6 @@ import fs from '@skpm/fs'
 import TextLayer from './TextLayer'
 import {
   preferences,
-  getTypesettingsFilePath,
   getFontFamiliesDirectory
 } from './utilities'
 
