@@ -1,25 +1,36 @@
 import fs from '@skpm/fs'
-import merge from 'deepmerge'
 import TextLayer from './TextLayer'
-import { getTypesettingsFilePath, getFontFamiliesDirectory } from './utilities'
+import {
+  preferences,
+  getTypesettingsFilePath,
+  getFontFamiliesDirectory
+} from './utilities'
 
 let storage = null
 
-const fetchFamilySettings = fontFamily => {
-  const filePath = getTypesettingsFilePath(fontFamily)
-  if (!fs.existsSync(filePath)) return
-  return JSON.parse(fs.readFileSync(filePath, 'utf8'))
+const getFilePath = fontFamily => {
+  const fileName = `${ fontFamily.replace(/\s/g, '') }.json`
+  const pluginDefinedDirectory = `${ NSHomeDirectory() }/${ preferences.pluginDefinedDirectory }/${ fileName }`
+
+  if (fs.existsSync(pluginDefinedDirectory)) {
+    return pluginDefinedDirectory
+  }
+
+  return `${ NSHomeDirectory() }/${ preferences.userDefinedDirectory }/${ fileName }`
 }
 
 // Returns typesettings for a given text layer
-const fetch = (layer, pluginVersion) => {
-  const { fontFamily, fontSize, fontName, casing } = TextLayer.raw(layer)
+const fetch = (context, layer) => {
+  const { fontFamily, fontSize, fontName, casing } = TextLayer.transform(layer)
 
   if (!storage || (storage.family !== fontFamily)) {
-    storage = fetchFamilySettings(fontFamily)
+    const filePath = getFilePath(fontFamily)
+    if (!fs.existsSync(filePath)) return
+    storage = JSON.parse(fs.readFileSync(filePath, 'utf8'))
   }
 
   // Current Version
+  const pluginVersion = context.plugin.version()
   if (storage && storage.compatibleVersion >= pluginVersion.UTF8String()) {
     if (!storage[fontName] || !storage[fontName][casing] || !storage[fontName][casing][fontSize]) return
     return storage[fontName][casing][fontSize]
@@ -32,34 +43,11 @@ const fetch = (layer, pluginVersion) => {
   }
 }
 
-// Save or update settings
-const save = ({ family, settings }, pluginVersion) => {
-  const filePath = getTypesettingsFilePath(family) // rename family to fontFamily or something consistent
-  const newSettings = {
-    family,
-    ...settings,
-    compatibleVersion: pluginVersion.UTF8String(),
-    lastUpdated: new Date().toISOString()
-  }
-
-  // Update the typesettings it they exists
-  if (fs.existsSync(filePath)) {
-    const currSettings = JSON.parse(fs.readFileSync(filePath, 'utf8'))
-    const updatedSettings = merge(currSettings, newSettings)
-    fs.writeFileSync(filePath, JSON.stringify(updatedSettings))
-    return filePath
-  }
-
-  // Write out the settings since they do not exists
-  fs.writeFileSync(filePath, JSON.stringify(newSettings))
-  return filePath
-}
-
-const registerFamily = ({ family, urls }) => {
+const registerFamily = ({ family, fontUrls }) => {
   const filePath = getFontFamiliesDirectory()
   const newSettings = {
     family,
-    fonts: urls,
+    fonts: fontUrls,
     lastUpdated: new Date().toISOString()
   }
 
@@ -93,7 +81,7 @@ const registerFamily = ({ family, urls }) => {
 
 const Typesettings = {
   fetch,
-  save,
+  getFilePath,
   registerFamily
 }
 

@@ -6,7 +6,7 @@ export function onSelectionFinish (context) {
     const selection = getMSTextLayers(context.actionContext.oldSelection)
 
     selection.forEach(layer => {
-      const settings = Typesettings.fetch(layer, context.plugin.version())
+      const settings = Typesettings.fetch(context, layer)
 
       if (!settings) return
 

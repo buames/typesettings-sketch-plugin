@@ -25,9 +25,14 @@
       "script": "setLineHeight.js"
     },
     {
-      "name": "Register Typesettings",
-      "identifier": "register",
-      "script": "./register.js"
+      "name": "Typesettings",
+      "identifier": "register.typesettings",
+      "script": "./registerTypesettings.js"
+    },
+    {
+      "name": "Font to Download",
+      "identifier": "register.fontFamily",
+      "script": "./registerFontFamily.js"
     },
     {
       "name": "Preferences",
@@ -46,7 +51,13 @@
       "setCharacterSpacing",
       "setLineHeight",
       "-",
-      "register",
+      {
+        "title": "Register",
+        "items": [
+          "register.typesettings",
+          "register.fontFamily"
+        ]
+      },
       "fontInstaller",
       "preferences"
     ]

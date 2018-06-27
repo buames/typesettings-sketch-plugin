@@ -11,7 +11,7 @@ export default (context) => {
   }
 
   selection.forEach(layer => {
-    const settings = Typesettings.fetch(layer, context.plugin.version())
+    const settings = Typesettings.fetch(context, layer)
 
     if (!settings) {
       return counter.skipped++

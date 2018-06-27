@@ -1,10 +1,6 @@
 import UI from 'sketch/ui'
-import fs from '@skpm/fs'
 import merge from 'deepmerge'
-import {
-  getJSTextLayers,
-  pluck
-} from './utilities'
+import { getJSTextLayers, pluck } from './utilities'
 import TextLayer from './TextLayer'
 import Typesettings from './Typesettings'
 
@@ -56,7 +52,7 @@ export default (context) => {
   }
 
   // Process the text layers
-  const textLayers = selection.map(TextLayer.raw)
+  const textLayers = selection.map(TextLayer.transform)
 
   // Get all of the font families from the text layers
   const fontFamilies = pluck(textLayers, 'fontFamily')
@@ -65,31 +61,26 @@ export default (context) => {
   const typesettings = fontFamilies.map(family => {
 
     // Create the typesettings for each family + size + casing
-    const variants = textLayers .filter((textLayer) => textLayer.fontFamily === family)
+    const fonts = textLayers .filter((textLayer) => textLayer.fontFamily === family)
 
-    const settings = merge.all(variants.map(TextLayer.transform))
+    const variants = merge.all(fonts.map(TextLayer.toVariant))
 
     // Get all of the font names from the variants and prompt for download urls
-    const fontNames = pluck(variants, 'fontName')
+    const fontNames = pluck(fonts, 'fontName')
     const fontUrls = promptForFontUrls(fontNames)
 
     return {
       family,
-      settings,
-      urls: fontUrls,
+      variants,
+      fontUrls,
     }
   })
 
   // Save the typesettings and update the directory
-  const done = typesettings.map(ts => {
-
-    // Save / update the typesettings
-    Typesettings.save(ts, context.plugin.version())
-
-    // Update the families.json file if there were download urls provided
-    Typesettings.registerFamily(ts)
-
-    return `Exported ${ ts.family } typesettings`
+  const done = typesettings.map(settings => {
+    Typesettings.save(context, settings)
+    Typesettings.registerFamily(settings)
+    return `Exported ${ settings.family } typesettings`
   })
   
   const msg = (done.length == 1) ? done.join('') : `Exported typesettings for ${ done.length } fonts`

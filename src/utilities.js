@@ -1,6 +1,5 @@
 import Settings from 'sketch/settings'
 import { fromNative } from 'sketch/dom'
-import fs from '@skpm/fs'
 
 /* =========================================================
     General
@@ -47,17 +46,6 @@ export const getJSTextLayers = selection => {
   const arr = [ ]
   getMSTextLayers(selection).forEach(layer => arr.push(fromNative(layer)))
   return arr
-}
-
-export const getTypesettingsFilePath = (fontFamily) => {
-  const fileName = `${ fontFamily.replace(/\s/g, '') }.json`
-  const pluginDefinedDirectory = `${ NSHomeDirectory() }/${ preferences.pluginDefinedDirectory }/${ fileName }`
-
-  if (fs.existsSync(pluginDefinedDirectory)) {
-    return pluginDefinedDirectory
-  }
-
-  return `${ NSHomeDirectory() }/${ preferences.userDefinedDirectory }/${ fileName }`
 }
 
 export const getFontFamiliesDirectory = () => {

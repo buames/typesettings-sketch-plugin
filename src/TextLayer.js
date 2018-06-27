@@ -4,7 +4,7 @@ export const TEXT_TRANSFORM = {
   2: 'lowercase'
 }
 
-const raw = textLayer => {
+const transform = textLayer => {
   const layer = textLayer.sketchObject || textLayer
   const attrs = layer.style().textStyle().attributes()
   return {
@@ -20,7 +20,7 @@ const raw = textLayer => {
   }
 }
 
-const transform = textLayer => ({
+const toVariant = textLayer => ({
   [textLayer.fontName]: {
     fontFamily: textLayer.fontFamily,
     fontName: textLayer.fontName,
@@ -37,8 +37,8 @@ const transform = textLayer => ({
 })
 
 const TextLayer = {
-  raw,
-  transform
+  transform,
+  toVariant
 }
 
 export default TextLayer
