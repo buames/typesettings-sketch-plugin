@@ -10,38 +10,38 @@
           "SelectionChanged.finish": "onSelectionFinish"
         }
       },
-      "script": "auto.js"
+      "script": "./commands/auto.js"
     },
     {
       "name": "Set Character Spacing",
-      "shortcut": "",
-      "identifier": "setCharacterSpacing",
-      "script": "setCharacterSpacing.js"
+      "handler": "onSetCharacterSpacing",
+      "identifier": "typeset.characterSpacing",
+      "script": "./commands/typeset.js"
     },
     {
       "name": "Set Line Height",
-      "shortcut": "",
-      "identifier": "setLineHeight",
-      "script": "setLineHeight.js"
+      "handler": "onSetLineHeight",
+      "identifier": "typeset.lineHeight",
+      "script": "./commands/typeset.js"
     },
     {
       "name": "Register Typesettings",
-      "identifier": "register",
-      "script": "./register.js"
+      "identifier": "register.typesettings",
+      "script": "./commands/register.js"
     },
     {
       "name": "Preferences",
       "identifier": "preferences",
-      "script": "./preferences.js"
+      "script": "./commands/preferences.js"
     }
   ],
   "menu": {
     "title": "Typesettings",
     "items": [
-      "setCharacterSpacing",
-      "setLineHeight",
+      "typeset.characterSpacing",
+      "typeset.lineHeight",
       "-",
-      "register",
+      "register.typesettings",
       "preferences"
     ]
   }
