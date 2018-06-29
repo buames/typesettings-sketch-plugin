@@ -6,6 +6,12 @@ Create typesettings once and use them anywhere. Set character spacing and line h
 
 ---
 
+### Demo
+
+![Demo](/docs/demo.gif)
+
+---
+
 ### Usage
 
 #### `Set Character Spacing`
@@ -58,7 +64,7 @@ You can change both the prefix and suffix in the plugin preferences.
 
 ### (Pre) Registered
 
-The following typefaces have been registered and automatically included with the plugin. If you'd like to add more, put the typesettings in the `assets` directory and open a pull request.
+The following typefaces have been registered and automatically included with the plugin. If you'd like to add more, put the typesettings in the `directory` folder and open a pull request.
 
 - **[SF Pro Display](https://developer.apple.com/fonts)** from iOS resource [guidelines](https://developer.apple.com/design/resources)
 - **[SF Pro Text](https://developer.apple.com/fonts)** from iOS resource [guidelines](https://developer.apple.com/design/resources)
