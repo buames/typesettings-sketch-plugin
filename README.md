@@ -14,6 +14,12 @@ Get the [TypesettingsStarter.sketch](/sketch/TypesettingsStarter.sketch) file to
 
 ---
 
+### Installation
+
+You can install the plugin with [Sketch Runner](https://sketchrunner.com) or by downloading it from the [latest release](https://github.com/buames/typesettings-sketch-plugin/releases/latest).
+
+---
+
 ### Commands
 
 #### `Set Character Spacing`
