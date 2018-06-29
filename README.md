@@ -10,9 +10,13 @@ Create typesettings once and use them anywhere. Set character spacing and line h
 
 ![Demo](/docs/demo.gif)
 
+```
+Get the [TypesettingsStarter.sketch](/sketch/TypesettingsStarter.sketch) file to get going easily.
+```
+
 ---
 
-### Usage
+### Commands
 
 #### `Set Character Spacing`
 
