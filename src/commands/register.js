@@ -20,8 +20,8 @@ export default (context) => {
   const families = pluck(textLayers, 'fontFamily')
 
   // Create the typesettings for each font family
-  const typesettings = families.map(family => {
-    const fonts = textLayers.filter((layer) => layer.fontFamily === family)
+  const typesettings = families.map((family) => {
+    const fonts = textLayers.filter(layer => layer.fontFamily === family)
     const variants = merge.all(fonts.map(Typesetter.toVariant))
     return {
       family,
@@ -29,16 +29,16 @@ export default (context) => {
       lastUpdated,
       version, // plugin version used to register typesettings
       compatibleVersion: MIN_VERSION // min plugin version to load typesettings
-      }
+    }
   })
 
   // Replace or update the typesettings
-  const done = typesettings.map(settings => {
+  const done = typesettings.map((settings) => {
     const filePath = Typesetter.filePath(settings.family)
 
     if (fs.existsSync(filePath)) {
       const currSettings = JSON.parse(fs.readFileSync(filePath, 'utf8'))
-      const compatibleVersion = currSettings.compatibleVersion
+      const { compatibleVersion } = currSettings
 
       // Check if plugin is out of date and incompatible with a newer typesettings version
       if (compatibleVersion && compatibleVersion > version) {
@@ -54,7 +54,7 @@ export default (context) => {
         alert.addButtonWithTitle('Continue')
         alert.addButtonWithTitle('Cancel')
         const response = alert.runModal()
-  
+
         if (response === 1001) return 'Nothing saved'
 
         if (response === 1000) {

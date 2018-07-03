@@ -29,7 +29,7 @@ export default (context) => {
           type: 'checkbox',
           title: 'Enable Auto Line Height',
           state: preferences.allowsAutoLineHeight
-        },
+        }
       ]
     },
     {
@@ -58,9 +58,9 @@ export default (context) => {
   ]
 
   const prompt = openPrompt({
+    sections,
     title: 'Typesettings Preferences',
-    sections: sections,
-    buttons: [ 'Save', 'Cancel', 'Learn More' ],
+    buttons: ['Save', 'Cancel', 'Learn More'],
     shouldTabInputs: true
   })
 

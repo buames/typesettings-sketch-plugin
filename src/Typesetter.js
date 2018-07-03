@@ -8,7 +8,7 @@ const TEXT_TRANSFORM = {
   2: 'lowercase'
 }
 
-const filePath = fontFamily => {
+const filePath = (fontFamily) => {
   const fileName = `${ fontFamily.replace(/\s/g, '') }.json`
   const pluginDefinedDirectory = `${ NSHomeDirectory() }/${ preferences.pluginDefinedDirectory }/${ fileName }`
 
@@ -19,7 +19,7 @@ const filePath = fontFamily => {
   return `${ NSHomeDirectory() }/${ preferences.userDefinedDirectory }/${ fileName }`
 }
 
-const transform = textLayer => {
+const transform = (textLayer) => {
   const layer = textLayer.sketchObject || textLayer
   const attrs = layer.style().textStyle().attributes()
   return {
@@ -29,7 +29,9 @@ const transform = textLayer => {
     fontPostscriptName: String(layer.fontPostscriptName()),
     fontSize: Number(layer.fontSize()),
     casing: TEXT_TRANSFORM[attrs.MSAttributedStringTextTransformAttribute || 0],
-    characterSpacing: layer.characterSpacing() ? Number(layer.characterSpacing()) : layer.characterSpacing(),
+    characterSpacing: layer.characterSpacing()
+      ? Number(layer.characterSpacing())
+      : layer.characterSpacing(),
     lineHeight: Number(layer.lineHeight()),
     paragraphSpacing: Number(attrs.NSParagraphStyle.paragraphSpacing())
   }
@@ -54,7 +56,12 @@ const toVariant = textLayer => ({
 // Returns typesettings for a given text layer
 let storage = null
 const fetch = (context, layer) => {
-  const { fontFamily, fontSize, fontName, casing } = transform(layer)
+  const {
+    fontFamily,
+    fontSize,
+    fontName,
+    casing
+  } = transform(layer)
 
   if (!storage || (storage.family !== fontFamily)) {
     const file = filePath(fontFamily)
@@ -63,12 +70,16 @@ const fetch = (context, layer) => {
   }
 
   const version = context.plugin.version().UTF8String()
-  const compatibleVersion = storage.compatibleVersion
+  const { compatibleVersion } = storage
 
   // Check if the settings are compatible
   // (v0.0.2 and below will not have a compatibleVersion)
   if (!compatibleVersion || compatibleVersion < Number(MIN_VERSION)) {
-    if (!storage[fontName] || !storage[fontName][fontSize] || !storage[fontName][fontSize][casing]) return
+    if (!storage[fontName]
+      || !storage[fontName][fontSize]
+      || !storage[fontName][fontSize][casing]) {
+      return
+    }
     log('You should re-register your typesettings using the latest version of the Typesettings plugin.')
     return storage[fontName][fontSize][casing]
   }
@@ -81,7 +92,11 @@ const fetch = (context, layer) => {
 
   // Latest Version
   if (compatibleVersion && compatibleVersion <= version) {
-    if (!storage[fontName] || !storage[fontName][casing] || !storage[fontName][casing][fontSize]) return
+    if (!storage[fontName]
+    || !storage[fontName][casing]
+    || !storage[fontName][casing][fontSize]) {
+      return
+    }
     return storage[fontName][casing][fontSize]
   }
 }
