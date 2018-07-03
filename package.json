@@ -20,13 +20,23 @@
     "start": "skpm-build --watch --run",
     "postinstall": "npm run build && skpm-link",
     "precommit": "lint-staged",
-    "lint": "eslint --ext .js src/**/ --fix"
+    "lint": "eslint --ext .js src/**/ --fix",
+    "changelog": "lerna-changelog"
   },
   "lint-staged": {
     "*.js": [
       "eslint --fix",
       "git add"
     ]
+  },
+  "changelog": {
+    "labels": {
+      "Tag: Breaking Change": ":boom: Breaking Change",
+      "Tag: Enhancement": ":rocket: Enhancement",
+      "Tag: Bug Fix": ":bug: Bug Fix",
+      "Tag: Documentation": ":memo: Documentation",
+      "Tag: Internal": ":house: Internal"
+    }
   },
   "dependencies": {
     "@skpm/fs": "^0.1.2",
@@ -40,6 +50,7 @@
     "eslint-config-sketch": "^0.2.4",
     "eslint-plugin-import": "^2.13.0",
     "husky": "^0.14.3",
+    "lerna-changelog": "^0.8.0",
     "lint-staged": "^7.2.0"
   },
   "homepage": "https://github.com/buames/typesettings-sketch-plugin",
