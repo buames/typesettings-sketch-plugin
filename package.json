@@ -47,5 +47,6 @@
     "type": "git",
     "url": "git+https://github.com/buames/typesettings-sketch-plugin.git"
   },
-  "author": "buames <jamesmakeseyes@gmail.com>"
+  "author": "buames <jamesmakeseyes@gmail.com>",
+  "license": "MIT"
 }
