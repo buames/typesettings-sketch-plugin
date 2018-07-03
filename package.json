@@ -1,6 +1,6 @@
 {
   "name": "typesettings-sketch-plugin",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A quest for consistency",
   "engines": {
     "sketch": ">=3.0"
