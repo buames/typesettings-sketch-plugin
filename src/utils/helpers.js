@@ -5,17 +5,17 @@ export const pluck = (arr, prop) => {
   return mapped.filter((value, index, self) => self.indexOf(value) === index)
 }
 
-export const getMSTextLayers = selection => {
+export const getMSTextLayers = (selection) => {
   const predicate = NSPredicate.predicateWithFormat('className == %@', 'MSTextLayer')
   return selection.filteredArrayUsingPredicate(predicate)
 }
 
-export const getJSTextLayers = selection => {
+export const getJSTextLayers = (selection) => {
   if (Array.isArray(selection)) {
-    return selection.filter((layer) => layer.type === 'Text')
+    return selection.filter(layer => layer.type === 'Text')
   }
-  
-  const arr = [ ]
+
+  const arr = []
   getMSTextLayers(selection).forEach(layer => arr.push(fromNative(layer)))
   return arr
 }

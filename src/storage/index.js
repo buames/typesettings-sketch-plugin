@@ -12,9 +12,9 @@ export const preferences = {
   ignoreSuffix: Settings.settingForKey('ignoreSuffix') || '^'
 }
 
-export const savePreferences = newPrefs => {
+export const savePreferences = (newPrefs) => {
   const prefs = { ...preferences, ...newPrefs }
-  Object.keys(prefs).forEach(key => {
+  Object.keys(prefs).forEach((key) => {
     Settings.setSettingForKey(key, prefs[key])
   })
   return 'Updated Settings'

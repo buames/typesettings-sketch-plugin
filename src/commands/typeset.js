@@ -12,10 +12,13 @@ const typeset = (context, opts) => {
 
   const counter = { set: 0, skipped: 0 }
 
-  selection.forEach(layer => {
+  selection.forEach((layer) => {
     const settings = Typesetter.fetch(context, layer)
 
-    if (!settings) return counter.skipped++
+    if (!settings) {
+      counter.skipped += 1
+      return
+    }
 
     if (setCharacterSpacing) {
       layer.setCharacterSpacing(settings.characterSpacing)
@@ -26,7 +29,7 @@ const typeset = (context, opts) => {
       layer.setLineHeight(settings.lineHeight)
       layer.absoluteRect().setRulerY(yPos)
     }
-    counter.set++
+    counter.set += 1
   })
 
   // Reload and return the count
@@ -35,7 +38,7 @@ const typeset = (context, opts) => {
 }
 
 // onRun Typset Character Spacing
-export const onSetCharacterSpacing = context => {
+export const onSetCharacterSpacing = (context) => {
   const done = typeset(context, {
     setCharacterSpacing: true,
     setLineHeight: false
@@ -44,7 +47,7 @@ export const onSetCharacterSpacing = context => {
 }
 
 // onRun Typset Line Height
-export const onSetLineHeight = context => {
+export const onSetLineHeight = (context) => {
   const done = typeset(context, {
     setCharacterSpacing: false,
     setLineHeight: true
