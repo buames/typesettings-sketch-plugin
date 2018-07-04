@@ -22,7 +22,7 @@ settings:
   import/core-modules: [
     'sketch/ui',
     'sketch/dom',
-    sketch/settings
+    'sketch/settings'
   ]
 
 rules:

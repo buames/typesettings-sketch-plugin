@@ -34,6 +34,11 @@ const typeset = (context, opts) => {
 
   // Reload and return the count
   context.document.reloadInspector()
+
+  if (counter.set === 0 && counter.skipped > 0) {
+    return 'No registered typesettings'
+  }
+
   return `Set: ${ counter.set }, Skipped: ${ counter.skipped }`
 }
 

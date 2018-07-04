@@ -14,23 +14,39 @@
     },
     {
       "name": "Set Character Spacing",
-      "handler": "onSetCharacterSpacing",
+      "description": "Set selected text layer's character spacing if the typesettings are registered.",
+      "shortcut" : "cmd shift →",
+      "icon": "icons/setLineHeight.png",
+      "handlers": {
+        "run": "onSetCharacterSpacing"
+      },
       "identifier": "typeset.characterSpacing",
       "script": "./commands/typeset.js"
     },
     {
       "name": "Set Line Height",
-      "handler": "onSetLineHeight",
+      "description": "Set selected text layer's line height if the typesettings are registered.",
+      "shortcut" : "cmd shift ↓",
+      "icon": "icons/setLineHeight.png",
+      "handlers": {
+        "run": "onSetLineHeight"
+      },
       "identifier": "typeset.lineHeight",
       "script": "./commands/typeset.js"
     },
     {
       "name": "Register Typesettings",
+      "description": "Register typsettings of all selected layers.",
+      "shortcut" : "ctrl alt cmd ↩",
+      "icon": "icons/setLineHeight.png",
       "identifier": "register.typesettings",
       "script": "./commands/register.js"
     },
     {
       "name": "Preferences",
+      "description": "Manage your Typesettings Plugin preferences.",
+      "shortcut" : "ctrl alt cmd t",
+      "icon": "icons/setLineHeight.png",
       "identifier": "preferences",
       "script": "./commands/preferences.js"
     }

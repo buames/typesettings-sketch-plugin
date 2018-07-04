@@ -1,36 +1,42 @@
-## Typesettings Sketch Plugin
+# Typesettings Sketch Plugin
 
 Create typesettings once and use them anywhere. Set character spacing and line height of text layers based on the `font family`, `font weight`, `font size`, and `letter casing`. Better yet, let the plugin do it for you automatically when you allow it to from the plugin preferences.
 
 [Below](#pre-registered) you'll find typsettings that are already included with the plugin.
 
----
-
-### Demo
+## Demo
 
 ![Demo](/docs/demo.gif)
 
 Get the [TypesettingsStarter.sketch](/sketch/TypesettingsStarter.sketch) file to get going easily.
 
----
-
-### Installation
+## Installation
 
 You can install the plugin with [Sketch Runner](https://sketchrunner.com) or by downloading it from the [latest release](https://github.com/buames/typesettings-sketch-plugin/releases/latest).
 
----
+## Commands
 
-### Commands
+### Set Character Spacing
 
-#### `Set Character Spacing`
+```
+cmd + shift + right arrow
+```
 
 Sets the character spacing of any selected text layer based on the font and text size. You can `enable automatic character spacing` in the plugin preferences.
 
-#### `Set Line Height`
+### Set Line Height
+
+```
+cmd + shift + down arrow
+```
 
 Sets the line height of any selected text layer based on the font and text size. You can `enable automatic line height` in the plugin preferences.
 
-#### `Register Typesettings`
+### Register Typesettings
+
+```
+ctrl + alt + cmd + return
+```
 
 To register typesettings, you'll want to do the following:
 
@@ -51,7 +57,11 @@ For example:
 3. Set the character spacing and line height of each text layer to whatever you want
 4. Select both layers and Register them
 
-#### `Preferences`
+### Preferences
+
+```
+ctrl + alt + cmd + t
+```
 
 **Local Registry**
 
@@ -68,9 +78,7 @@ When `automatic character spacing` and/or `automatic line height` are enabled, y
 
 You can change both the prefix and suffix in the plugin preferences.
 
---- 
-
-### (Pre) Registered
+## (Pre) Registered
 
 The following typefaces have been registered and automatically included with the plugin. If you'd like to add more, put the typesettings in the `directory` folder and open a pull request.
 
@@ -78,9 +86,7 @@ The following typefaces have been registered and automatically included with the
 - **[SF Pro Text](https://developer.apple.com/fonts)** from iOS resource [guidelines](https://developer.apple.com/design/resources)
 - **[SF Compact](https://developer.apple.com/fonts)** from watchOS resource [guidelines](https://developer.apple.com/design/resources)
 
---- 
-
-### Development
+## Development
 
 _This plugin was created using `skpm`. For a detailed explanation on how things work, checkout the [skpm Readme](https://github.com/skpm/skpm/blob/master/README.md)._
 
