@@ -1,7 +1,7 @@
 {
   "compatibleVersion": 3,
   "bundleVersion": 1,
-  "icon": "icon.png",
+  "icon": "icons/mark.png",
   "commands": [
     {
       "name": "Automatically Typeset Text Layers",
@@ -16,49 +16,57 @@
       "name": "Set Character Spacing",
       "description": "Set selected text layer's character spacing if the typesettings are registered.",
       "shortcut" : "cmd shift →",
-      "icon": "icons/setLineHeight.png",
+      "icon": "icons/characterSpacingRunner.png",
       "handlers": {
         "run": "onSetCharacterSpacing"
       },
-      "identifier": "typeset.characterSpacing",
+      "identifier": "typesetCharacterSpacing",
       "script": "./commands/typeset.js"
     },
     {
       "name": "Set Line Height",
       "description": "Set selected text layer's line height if the typesettings are registered.",
       "shortcut" : "cmd shift ↓",
-      "icon": "icons/setLineHeight.png",
+      "icon": "icons/lineHeightRunner.png",
       "handlers": {
         "run": "onSetLineHeight"
       },
-      "identifier": "typeset.lineHeight",
+      "identifier": "typesetLineHeight",
       "script": "./commands/typeset.js"
     },
     {
       "name": "Register Typesettings",
       "description": "Register typsettings of all selected layers.",
       "shortcut" : "ctrl alt cmd ↩",
-      "icon": "icons/setLineHeight.png",
-      "identifier": "register.typesettings",
+      "icon": "icons/registerRunner.png",
+      "identifier": "registerTypesettings",
       "script": "./commands/register.js"
     },
     {
       "name": "Preferences",
       "description": "Manage your Typesettings Plugin preferences.",
       "shortcut" : "ctrl alt cmd t",
-      "icon": "icons/setLineHeight.png",
+      "icon": "icons/mark.png",
       "identifier": "preferences",
       "script": "./commands/preferences.js"
+    },
+    {
+      "name": "Set Directory from Selection",
+      "identifier": "sandboxSetDirectory",
+      "handler": "setDirectory",
+      "script": "./commands/sandbox.js"
     }
   ],
   "menu": {
     "title": "Typesettings",
     "items": [
-      "typeset.characterSpacing",
-      "typeset.lineHeight",
+      "typesetCharacterSpacing",
+      "typesetLineHeight",
       "-",
-      "register.typesettings",
-      "preferences"
+      "registerTypesettings",
+      "preferences",
+      "-",
+      "sandboxSetDirectory"
     ]
   }
 }

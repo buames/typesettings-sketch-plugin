@@ -12,6 +12,9 @@
     "assets": [
       "assets/**/*",
       "directory/**/*"
+    ],
+    "resources": [
+      "resources/**/*.js"
     ]
   },
   "scripts": {
@@ -20,7 +23,8 @@
     "start": "skpm-build --watch --run",
     "postinstall": "npm run build && skpm-link",
     "precommit": "lint-staged",
-    "lint": "eslint --ext .js src/**/ --fix",
+    "lint:webview": "eslint --ext .js resources/**/ --fix",
+    "lint:plugin": "eslint --ext .js src/**/ --fix",
     "changelog": "lerna-changelog"
   },
   "lint-staged": {
@@ -39,19 +43,32 @@
     }
   },
   "dependencies": {
+    "@emotion/core": "^0.13.0",
+    "@emotion/jsx": "^0.7.0",
+    "@emotion/provider": "^0.11.1",
+    "@emotion/styled": "^0.10.3",
+    "@skpm/dialog": "^0.2.3",
     "@skpm/fs": "^0.1.2",
     "@skpm/path": "^0.1.0",
-    "deepmerge": "^2.1.1"
+    "deepmerge": "^2.1.1",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-router-dom": "^4.3.1",
+    "sketch-module-web-view": "^1.2.3"
   },
   "devDependencies": {
+    "@emotion/babel-plugin-core": "^0.6.8",
     "@skpm/builder": "^0.5.2",
-    "eslint": "^5.0.1",
+    "@skpm/extract-loader": "^2.0.2",
+    "eslint": "4.x",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-config-sketch": "^0.2.4",
     "eslint-plugin-import": "^2.13.0",
+    "html-loader": "^0.5.5",
     "husky": "^0.14.3",
     "lerna-changelog": "^0.8.0",
-    "lint-staged": "^7.2.0"
+    "lint-staged": "^7.2.0",
+    "skpm": "1.1.4"
   },
   "homepage": "https://github.com/buames/typesettings-sketch-plugin",
   "repository": {
