@@ -42,7 +42,7 @@ export default (context) => {
 
       // Check if plugin is out of date and incompatible with a newer typesettings version
       if (compatibleVersion && compatibleVersion > version) {
-        return UI.message('Your plugin is out of date. Please update to the latest version of Typesettings.')
+        return 'Your plugin is out of date. Please update to the latest version of Typesettings.'
       }
 
       // Check if the existing settings are compatible and override if not
@@ -55,10 +55,12 @@ export default (context) => {
         alert.addButtonWithTitle('Cancel')
         const response = alert.runModal()
 
-        if (response === 1001) return 'Nothing saved'
+        if (response === 1001) {
+          return 'Nothing saved'
+        }
 
         if (response === 1000) {
-          fs.writeFileSync(filePath, JSON.stringify(settings))
+          fs.writeFileSync(filePath, JSON.stringify(settings, null, 2))
           return `Replaced ${ settings.family } typesettings`
         }
       }
@@ -73,22 +75,24 @@ export default (context) => {
       const response = alert.runModal()
 
       // Cancel clicked
-      if (response === 1002) return 'Nothing saved'
+      if (response === 1002) {
+        return 'Nothing saved'
+      }
 
       // Replace clicked
       if (response === 1001) {
-        fs.writeFileSync(filePath, JSON.stringify(settings))
+        fs.writeFileSync(filePath, JSON.stringify(settings, null, 2))
         return `Replaced ${ settings.family } typesettings`
       }
 
       // Merge clicked
       const updatedSettings = merge(currSettings, settings)
-      fs.writeFileSync(filePath, JSON.stringify(updatedSettings))
+      fs.writeFileSync(filePath, JSON.stringify(updatedSettings, null, 2))
       return `Updated ${ settings.family } typesettings`
     }
 
     // Write out the settings since they do not exists
-    fs.writeFileSync(filePath, JSON.stringify(settings))
+    fs.writeFileSync(filePath, JSON.stringify(settings, null, 2))
     return `Created ${ settings.family } typesettings`
   })
 

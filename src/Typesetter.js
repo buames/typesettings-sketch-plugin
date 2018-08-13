@@ -1,5 +1,7 @@
 import UI from 'sketch/ui'
 import fs from '@skpm/fs'
+
+import { __DEV__ } from './utils/helpers'
 import { MIN_VERSION, preferences } from './storage'
 
 const TEXT_TRANSFORM = {
@@ -8,10 +10,17 @@ const TEXT_TRANSFORM = {
   2: 'lowercase'
 }
 
-const filePath = (fontFamily) => {
+const filePath = (plugin, fontFamily) => {
   const fileName = `${ fontFamily.replace(/\s/g, '') }.json`
-  const pluginDefinedDirectory = `${ NSHomeDirectory() }/${ preferences.pluginDefinedDirectory }/${ fileName }`
 
+  // First check the plugin's assets to see if the typesettings already exists.
+  // If they do return those to be used for setting the type
+  const pluginDefinedDirectory = __DEV__
+    ? `/Users/jamesbutts/Development/typesettings-sketch-plugin/directory/${ fileName }`
+    : plugin.urlForResourceNamed(fileName).path()
+
+  // console.log(fs.existsSync(pluginDefinedDirectory))
+  // console.log(pluginDefinedDirectory)
   if (fs.existsSync(pluginDefinedDirectory)) {
     return pluginDefinedDirectory
   }
@@ -55,7 +64,7 @@ const toVariant = textLayer => ({
 
 // Returns typesettings for a given text layer
 let storage = null
-const fetch = (context, layer) => {
+const fetch = ({ plugin }, layer) => {
   const {
     fontFamily,
     fontSize,
@@ -64,12 +73,12 @@ const fetch = (context, layer) => {
   } = transform(layer)
 
   if (!storage || (storage.family !== fontFamily)) {
-    const file = filePath(fontFamily)
+    const file = filePath(plugin, fontFamily)
     if (!fs.existsSync(file)) return
     storage = JSON.parse(fs.readFileSync(file, 'utf8'))
   }
 
-  const version = context.plugin.version().UTF8String()
+  const version = plugin.version().UTF8String()
   const { compatibleVersion } = storage
 
   // Check if the settings are compatible

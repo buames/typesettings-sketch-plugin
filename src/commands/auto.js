@@ -22,7 +22,9 @@ export const onSelectionFinish = (context) => {
       const settings = Typesetter.fetch(context, layer)
 
       // If we don't have settings, bail
-      if (!settings) return
+      if (!settings) {
+        return
+      }
 
       // If auto character spacing is allowed, set it
       if (allowsAutoKerning) {
