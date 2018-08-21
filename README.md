@@ -8,7 +8,7 @@ Create typesettings once and use them anywhere. Set character spacing and line h
 
 ![Demo](/docs/demo.gif)
 
-Get the [TypesettingsStarter.sketch](/sketch/TypesettingsStarter.sketch) file to get going easily.
+Get the [TypesettingsStarter.sketch](/docs/sketch-templates/TypesettingsStarter.sketch) file to get going easily.
 
 ## Installation
 

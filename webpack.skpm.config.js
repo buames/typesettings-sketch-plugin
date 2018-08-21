@@ -1,12 +1,13 @@
 const path = require('path')
 
-const context = path.resolve(process.cwd(), 'resources')
+const context = path.resolve(process.cwd(), 'src')
 
 module.exports = (config, isPluginCommand) => {
+  config.context = context
+  config.resolve.modules.push(context)
+
   if (!isPluginCommand) {
-    config.context = context
     config.resolve.extensions.push('.json', '.jsx')
-    config.resolve.modules.push(context)
     config.module.rules.push({
       test: /\.(html)$/,
       use: [
