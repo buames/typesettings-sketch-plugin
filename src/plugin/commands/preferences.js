@@ -1,4 +1,5 @@
 import dialog from '@skpm/dialog'
+import UI from 'sketch/ui'
 import BrowserWindow from 'sketch-module-web-view'
 import WebviewEntry from 'webview/index.html'
 import { preferences, savePreferences } from 'plugin/storage'
@@ -37,7 +38,7 @@ export default () => {
     webContents.executeJavaScript(`reloadData(${ JSON.stringify(newPrefs) })`)
   })
 
-  // Lets the user select a file path for the local directory
+  // Prompts to select a local directory file path
   webContents.on('selectUserDefinedDirectory', (newState) => {
     const opts = {
       buttonLabel: 'Set Directory',
@@ -55,6 +56,26 @@ export default () => {
       webContents.executeJavaScript(`reloadData(${ JSON.stringify(newPrefs) })`)
     }))
   })
+
+  // Copies the userDefinedDirectory to the clipboard
+  webContents.on('copyUserDefinedDirectoryPath', () => {
+    const pasteboard = NSPasteboard.generalPasteboard()
+    pasteboard.clearContents()
+    pasteboard.setString_forType_(preferences.userDefinedDirectory, NSStringPboardType) // eslint-disable-line
+    UI.message('Copied to clipboard!')
+  })
+
+  // Copies the userDefinedDirectory to the clipboard
+  webContents.on('showUserDefinedDirectory', () => (
+    NSWorkspace.sharedWorkspace()
+      .selectFile_inFileViewerRootedAtPath(preferences.userDefinedDirectory, null)
+  ))
+
+  // Open an external url
+  webContents.on('openUrl', url => (
+    NSWorkspace.sharedWorkspace()
+      .openURL(NSURL.URLWithString(url))
+  ))
 
   window.loadURL(WebviewEntry)
 }

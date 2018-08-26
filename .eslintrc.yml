@@ -14,6 +14,7 @@ globals:
   NSOnState: true
   NSSwitchButton: true
   NSHomeDirectory: true
+  NSStringPboardType: true
   document: true
   window: true
 

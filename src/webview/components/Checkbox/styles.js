@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import {
   colors,
-  font,
+  fonts,
   radii,
   space
 } from 'webview/style/variables'
@@ -10,15 +10,15 @@ export const CheckboxInput = styled.input`
   appearance: none;
   background: ${ colors.black.l100 };
   border: 0;
-  border-radius: ${ radii[1] }px;
+  border-radius: ${ radii[1] };
   box-shadow: inset 0 0 0 1px ${ colors.black.l92 };
   height: 14px;
   margin: 0;
   width: 14px;
 
   &:checked {
-    box-shadow: inset 0 0 0 1px ${ colors.brand.base };
-    background: ${ colors.brand.base };
+    box-shadow: inset 0 0 0 1px ${ colors.black.base };
+    background: ${ colors.black.base };
     outline: none;
   },
   
@@ -28,7 +28,7 @@ export const CheckboxInput = styled.input`
 `
 
 export const CheckboxLabel = styled.label`
-  ${ font.s12.n400 };
+  ${ fonts.s12.n400 };
   color: ${ colors.black.l10 };
   padding-left: ${ space[1] };
   width: 100%;

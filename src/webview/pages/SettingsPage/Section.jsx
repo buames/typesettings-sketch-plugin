@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 import {
   colors,
   borders,
-  font,
+  fonts,
   space
 } from 'webview/style/variables'
 
@@ -19,7 +19,7 @@ const Container = styled.section`
 `
 
 const TitleLabel = styled.h2`
-  ${ font.s12.n700 };
+  ${ fonts.s12.n700 };
   color: ${ colors.black.l10 };
   padding-bottom: ${ space[2] };
 `

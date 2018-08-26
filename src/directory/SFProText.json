@@ -1,1 +1,104 @@
-{"family":"SF Pro Text","SFProText-Regular":{"fontFamily":"SF Pro Text","fontName":"SFProText-Regular","fontDisplayName":"SF Pro Text Regular","fontPostscriptName":"SFProText-Regular","normalcase":{"11":{"characterSpacing":0.07000000029802322,"lineHeight":13,"paragraphSpacing":0},"12":{"characterSpacing":0,"lineHeight":16,"paragraphSpacing":0},"13":{"characterSpacing":-0.07999999821186066,"lineHeight":18,"paragraphSpacing":0},"14":{"characterSpacing":-0.1500000059604645,"lineHeight":19,"paragraphSpacing":0},"15":{"characterSpacing":-0.239999994635582,"lineHeight":20,"paragraphSpacing":0},"16":{"characterSpacing":-0.3199999928474426,"lineHeight":21,"paragraphSpacing":0},"17":{"characterSpacing":-0.4099999964237213,"lineHeight":22,"paragraphSpacing":0},"18":{"characterSpacing":-0.449999988079071,"lineHeight":23,"paragraphSpacing":0},"19":{"characterSpacing":-0.4900000095367432,"lineHeight":24,"paragraphSpacing":0}}},"SFProText-Semibold":{"fontFamily":"SF Pro Text","fontName":"SFProText-Semibold","fontDisplayName":"SF Pro Text Semibold","fontPostscriptName":"SFProText-Semibold","normalcase":{"14":{"characterSpacing":-0.1500000059604645,"lineHeight":19,"paragraphSpacing":0},"15":{"characterSpacing":-0.239999994635582,"lineHeight":20,"paragraphSpacing":0},"16":{"characterSpacing":-0.3199999928474426,"lineHeight":21,"paragraphSpacing":0},"17":{"characterSpacing":-0.4099999964237213,"lineHeight":22,"paragraphSpacing":0},"19":{"characterSpacing":-0.4900000095367432,"lineHeight":24,"paragraphSpacing":0}}},"lastUpdated":"2018-06-27T16:38:03.312Z","version":"0.0.3","compatibleVersion":"0.0.3"}
+{
+  "family": "SF Pro Text",
+  "SFProText-Regular": {
+    "fontFamily": "SF Pro Text",
+    "fontName": "SFProText-Regular",
+    "fontWeight": 400,
+    "fontStyle": "normal",
+    "sources": {
+      "locals": [
+        "SF Pro Text Regular",
+        "SFProText-Regular"
+      ]
+    },
+    "normalcase": {
+      "11": {
+        "characterSpacing": 0.07000000029802322,
+        "lineHeight": 13,
+        "paragraphSpacing": 0
+      },
+      "12": {
+        "characterSpacing": 0,
+        "lineHeight": 16,
+        "paragraphSpacing": 0
+      },
+      "13": {
+        "characterSpacing": -0.07999999821186066,
+        "lineHeight": 18,
+        "paragraphSpacing": 0
+      },
+      "14": {
+        "characterSpacing": -0.1500000059604645,
+        "lineHeight": 19,
+        "paragraphSpacing": 0
+      },
+      "15": {
+        "characterSpacing": -0.239999994635582,
+        "lineHeight": 20,
+        "paragraphSpacing": 0
+      },
+      "16": {
+        "characterSpacing": -0.3199999928474426,
+        "lineHeight": 21,
+        "paragraphSpacing": 0
+      },
+      "17": {
+        "characterSpacing": -0.4099999964237213,
+        "lineHeight": 22,
+        "paragraphSpacing": 0
+      },
+      "18": {
+        "characterSpacing": -0.449999988079071,
+        "lineHeight": 23,
+        "paragraphSpacing": 0
+      },
+      "19": {
+        "characterSpacing": -0.4900000095367432,
+        "lineHeight": 24,
+        "paragraphSpacing": 0
+      }
+    }
+  },
+  "SFProText-Semibold": {
+    "fontFamily": "SF Pro Text",
+    "fontName": "SFProText-Semibold",
+    "fontWeight": 600,
+    "fontStyle": "normal",
+    "sources": {
+      "locals": [
+        "SF Pro Text Semibold",
+        "SFProText-Semibold"
+      ]
+    },
+    "normalcase": {
+      "14": {
+        "characterSpacing": -0.1500000059604645,
+        "lineHeight": 19,
+        "paragraphSpacing": 0
+      },
+      "15": {
+        "characterSpacing": -0.239999994635582,
+        "lineHeight": 20,
+        "paragraphSpacing": 0
+      },
+      "16": {
+        "characterSpacing": -0.3199999928474426,
+        "lineHeight": 21,
+        "paragraphSpacing": 0
+      },
+      "17": {
+        "characterSpacing": -0.4099999964237213,
+        "lineHeight": 22,
+        "paragraphSpacing": 0
+      },
+      "19": {
+        "characterSpacing": -0.4900000095367432,
+        "lineHeight": 24,
+        "paragraphSpacing": 0
+      }
+    }
+  },
+  "lastUpdated": "2018-09-03T17:25:41.817Z",
+  "version": "0.1.1",
+  "compatibleVersion": "0.0.3"
+}

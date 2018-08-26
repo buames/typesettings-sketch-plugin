@@ -44,8 +44,8 @@ class SettingsPage extends Component {
     pluginCall('setPreferences', this.state)
   }
 
-  handleSelectDirectory = () => {
-    pluginCall('selectUserDefinedDirectory', this.state)
+  handleOnClickDirectoryButton = (evt) => {
+    pluginCall(evt.target.name, this.state)
   }
 
   render() {
@@ -68,8 +68,19 @@ class SettingsPage extends Component {
             disabled
           />
           <Button
-            label="Select"
-            onClick={ this.handleSelectDirectory }
+            label="Change"
+            name="selectUserDefinedDirectory"
+            onClick={ this.handleOnClickDirectoryButton }
+          />
+          <Button
+            label="Copy"
+            name="copyUserDefinedDirectoryPath"
+            onClick={ this.handleOnClickDirectoryButton }
+          />
+          <Button
+            label="Open"
+            name="showUserDefinedDirectory"
+            onClick={ this.handleOnClickDirectoryButton }
           />
         </Section>
         <Section title="Automatic Typesettings">

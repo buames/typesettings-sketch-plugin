@@ -1,5 +1,3 @@
-import { CGSizeToObj, CGRectToObj } from 'plugin/utils/helpers'
-
 export const TEXT_TRANSFORM = {
   0: 'normalcase',
   1: 'uppercase',
@@ -35,7 +33,7 @@ export const FONT_WEIGHTS = {
 export const isItalicFont = (font) => {
   const traits = font.fontDescriptor().objectForKey(NSFontTraitsAttribute)
   const symbolicTraits = traits[NSFontSymbolicTrait].unsignedIntValue()
-  return (symbolicTraits && NSFontItalicTrait) !== 0
+  return (symbolicTraits & NSFontItalicTrait) !== 0 //eslint-disable-line
 }
 
 export const getStyleOfFont = (font) => {
@@ -51,34 +49,3 @@ export const getWeightOfFont = (font) => {
 export const getLetterCasing = attrs => (
   TEXT_TRANSFORM[attrs.MSAttributedStringTextTransformAttribute || 0]
 )
-
-export const getMetricsOfTypeface = font => ({
-  ascender: font.ascender(),
-  descender: font.descender(),
-  capHeight: font.capHeight(),
-  xHeight: font.xHeight(),
-  defaultLineHeight: font.defaultLineHeightForFont(),
-  italicAngle: font.italicAngle(),
-  leading: font.leading(),
-  maxAdvancement: CGSizeToObj(font.maximumAdvancement()),
-  numberOfGlyphs: font.numberOfGlyphs(),
-  underline: {
-    position: font.underlinePosition(),
-    thickness: font.underlineThickness()
-  },
-  boundingRect: CGRectToObj(font.boundingRectForFont())
-})
-
-export const getRelToAbsMetricsOfTypeface = metrics => ({
-  descentHeight: metrics.defaultLineHeight - metrics.descender,
-  capHeight: metrics.ascender - metrics.capHeight,
-  xHeight: metrics.ascender - metrics.xHeight,
-  capHeightCenter: metrics.ascender - metrics.capHeight * 0.5,
-  xHeightCenter: metrics.ascender - metrics.xHeight * 0.5
-})
-
-export const getTextLayerAttributes = (layer, metrics) => ({
-  alignment: TEXT_ALIGNMENT[layer.textAlignment()],
-  casing: TEXT_TRANSFORM[layer.styleAttributes().MSAttributedStringTextTransformAttribute || 0],
-  leading: layer.lineHeight() - (metrics.ascender + metrics.descender)
-})
