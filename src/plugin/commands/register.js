@@ -6,6 +6,10 @@ import Typesetter from 'plugin/Typesetter'
 import { MIN_VERSION } from 'plugin/storage'
 import { getJSTextLayers, pluck } from 'plugin/utils/helpers'
 
+const mergeOptions = {
+  arrayMerge: (destinationArray, sourceArray, options) => sourceArray // eslint-disable-line
+}
+
 export default (context) => {
   const selection = getJSTextLayers(context.selection)
 
@@ -23,7 +27,7 @@ export default (context) => {
   // Create the typesettings for each font family
   const typesettings = families.map((family) => {
     const fonts = textLayers.filter(layer => layer.fontFamily === family)
-    const variants = merge.all(fonts.map(Typesetter.toVariant))
+    const variants = merge.all(fonts.map(Typesetter.toVariant), mergeOptions)
     return {
       family,
       ...variants,
@@ -84,7 +88,7 @@ export default (context) => {
 
           if (response === 0) {
             // Merge clicked
-            const updatedSettings = merge(currSettings, settings)
+            const updatedSettings = merge(currSettings, settings, mergeOptions)
             fs.writeFileSync(filePath, JSON.stringify(updatedSettings, null, 2))
             status = `Updated ${ settings.family } typesettings`
           }

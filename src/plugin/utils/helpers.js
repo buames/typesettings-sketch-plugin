@@ -21,20 +21,3 @@ export const getJSTextLayers = (selection) => {
   getMSTextLayers(selection).forEach(layer => arr.push(fromNative(layer)))
   return arr
 }
-
-export const CGPointToObj = ({ x, y }) => ({
-  x,
-  y
-})
-
-export const CGSizeToObj = ({ width, height }) => ({
-  width,
-  height
-})
-
-export const CGRectToObj = ({ origin, size }) => ({
-  x: origin.x,
-  y: origin.y,
-  width: size.width,
-  height: size.height
-})

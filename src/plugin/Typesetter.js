@@ -36,7 +36,7 @@ const transform = (textLayer) => {
     fontPostscriptName: String(layer.fontPostscriptName()),
     fontSize: Number(layer.fontSize()),
     fontStyle: String(getStyleOfFont(attrs.NSFont)),
-    fontWeightValue: Number(getWeightOfFont(attrs.NSFont)),
+    fontWeight: Number(getWeightOfFont(attrs.NSFont)),
     casing: getLetterCasing(attrs),
     characterSpacing: layer.characterSpacing()
       ? Number(layer.characterSpacing())
@@ -50,11 +50,14 @@ const toVariant = textLayer => ({
   [textLayer.fontName]: {
     fontFamily: textLayer.fontFamily,
     fontName: textLayer.fontName,
-    fontDisplayName: textLayer.fontDisplayName,
-    fontPostscriptName: textLayer.fontPostscriptName,
-    fontWeightValue: textLayer.fontWeightValue,
+    fontWeight: textLayer.fontWeight,
     fontStyle: textLayer.fontStyle,
-    fontLocalNames: [ textLayer.fontDisplayName, textLayer.fontPostscriptName ],
+    sources: {
+      locals: [
+        textLayer.fontDisplayName,
+        textLayer.fontPostscriptName
+      ]
+    },
     [textLayer.casing]: {
       [textLayer.fontSize]: {
         characterSpacing: textLayer.characterSpacing,

@@ -24,5 +24,11 @@ module.exports = (config, isPluginCommand) => {
         }
       ]
     })
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        { loader: 'svg-inline-loader' }
+      ]
+    })
   }
 }

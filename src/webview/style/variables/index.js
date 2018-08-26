@@ -1,3 +1,6 @@
+import { generateFonts } from 'typesettings-js'
+import Typesettings from './typesettings'
+
 export const borders = [
   0,
   '1px solid',
@@ -24,51 +27,18 @@ export const colors = {
     l100: '#000000'
   },
   brand: {
-    base: 'blue'
+    base: '#03A87C'
   }
 }
 
-export const font = {
-  s10: {
-    n400: {
-      fontFamily: '-apple-system',
-      fontSize: '10px',
-      fontWeight: 400
-    }
-  },
-  s12: {
-    n400: {
-      fontFamily: '-apple-system',
-      fontSize: '12px',
-      fontWeight: 400
-    },
-    n700: {
-      fontFamily: '-apple-system',
-      fontSize: '12px',
-      fontWeight: 700
-    }
-  },
-  s14: {
-    n400: {
-      fontFamily: '-apple-system',
-      fontSize: '14px',
-      fontWeight: 400
-    },
-    n500: {
-      fontFamily: '-apple-system',
-      fontSize: '14px',
-      fontWeight: 500
-    },
-    n700: {
-      fontFamily: '-apple-system',
-      fontSize: '14px',
-      fontWeight: 700
-    }
-  }
-}
+export const fonts = generateFonts(Typesettings)
 
 export const radii = [
-  0, 3, 5, 10, 1000
+  0,
+  '3px',
+  '5px',
+  '10px',
+  '1000px'
 ]
 
 export const space = [
@@ -76,13 +46,15 @@ export const space = [
   '8px',
   '16px',
   '24px',
-  '32px'
+  '32px',
+  '40px',
+  '48px'
 ]
 
 export default {
   borders,
   colors,
-  font,
+  fonts,
   radii,
   space
 }

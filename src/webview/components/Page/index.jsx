@@ -1,17 +1,23 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Header, HeaderTitle, Main } from './styles'
+import styled from '@emotion/styled'
+import { space } from 'webview/style/variables'
+import PageHeader, { headerHeight } from './Header'
+import PageFooter from './Footer'
+
+const Main = styled.main`
+  padding-top: ${ headerHeight };
+  padding-left: ${ space[2] };
+  padding-right: ${ space[2] };
+`
 
 const Page = ({ title, children }) => (
   <Fragment>
-    <Header>
-      <HeaderTitle>
-        { title }
-      </HeaderTitle>
-    </Header>
+    <PageHeader title={ title } />
     <Main>
       { children }
     </Main>
+    <PageFooter />
   </Fragment>
 )
 
