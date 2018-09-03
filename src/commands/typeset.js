@@ -1,6 +1,6 @@
 import UI from 'sketch/ui'
-import Typesetter from 'plugin/Typesetter'
-import { getMSTextLayers } from 'plugin/utils/helpers'
+import Typesetter from '../Typesetter'
+import { getMSTextLayers } from '../utils/helpers'
 
 const typeset = (context, opts) => {
   const { setCharacterSpacing, setLineHeight } = opts
@@ -15,21 +15,20 @@ const typeset = (context, opts) => {
   selection.forEach((layer) => {
     const settings = Typesetter.fetch(context, layer)
 
-    if (typeof settings === 'string') {
-      counter.skipped += 1
-      UI.message(settings)
-      return
-    }
-
-    if (settings && settings.length === 0) {
+    if (!settings) {
       counter.skipped += 1
       return
     }
 
-    Typesetter.setType(layer, settings, {
-      kern: setCharacterSpacing,
-      lineHeight: setLineHeight
-    })
+    if (setCharacterSpacing) {
+      layer.setCharacterSpacing(settings.characterSpacing)
+    }
+
+    if (setLineHeight) {
+      const yPos = layer.absoluteRect().rulerY()
+      layer.setLineHeight(settings.lineHeight)
+      layer.absoluteRect().setRulerY(yPos)
+    }
     counter.set += 1
   })
 
@@ -37,7 +36,7 @@ const typeset = (context, opts) => {
   context.document.reloadInspector()
 
   if (counter.set === 0 && counter.skipped > 0) {
-    return 'There are no registered typesettings for the text layer.'
+    return 'No registered typesettings'
   }
 
   return `Set: ${ counter.set }, Skipped: ${ counter.skipped }`

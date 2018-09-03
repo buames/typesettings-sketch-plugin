@@ -7,4 +7,4 @@ node_modules
 *.lock
 .DS_Store
 typesettings.sketchplugin
-src/directory/PostmatesStd.json
+directory/PostmatesStd.json
