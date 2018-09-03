@@ -124,11 +124,26 @@ const fetch = (context, layer) => {
   return 'There are no registered typesettings for the text layer.'
 }
 
+const setType = (layer, settings, opts) => {
+  const { kern, lineHeight } = opts
+
+  if (kern) {
+    layer.setCharacterSpacing(settings.characterSpacing)
+  }
+
+  if (lineHeight) {
+    layer.style().textStyle().attributes().NSParagraphStyle
+      .setParagraphSpacing(settings.paragraphSpacing)
+    layer.setLineHeight(settings.lineHeight)
+  }
+}
+
 const Typesetter = {
   filePath,
   transform,
   toVariant,
-  fetch
+  fetch,
+  setType
 }
 
 export default Typesetter
