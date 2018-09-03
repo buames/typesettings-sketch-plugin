@@ -1,7 +1,5 @@
 import { fromNative } from 'sketch/dom'
 
-export const __DEV__ = process.env.NODE_ENV !== 'production' // eslint-disable-line
-
 export const pluck = (arr, prop) => {
   const mapped = arr.map(item => item[prop])
   return mapped.filter((value, index, self) => self.indexOf(value) === index)
