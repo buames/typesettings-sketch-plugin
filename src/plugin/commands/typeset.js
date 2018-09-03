@@ -26,15 +26,10 @@ const typeset = (context, opts) => {
       return
     }
 
-    if (setCharacterSpacing) {
-      layer.setCharacterSpacing(settings.characterSpacing)
-    }
-
-    if (setLineHeight) {
-      const yPos = layer.absoluteRect().rulerY()
-      layer.setLineHeight(settings.lineHeight)
-      layer.absoluteRect().setRulerY(yPos)
-    }
+    Typesetter.setType(layer, settings, {
+      kern: setCharacterSpacing,
+      lineHeight: setLineHeight
+    })
     counter.set += 1
   })
 
