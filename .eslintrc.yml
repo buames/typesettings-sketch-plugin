@@ -2,13 +2,10 @@
 root: true
 
 extends:
-  - airbnb-base
-  - plugin:import/errors
   - sketch
+  - airbnb
+  - plugin:import/errors
 
-env:
-  node: true
-  
 globals:
   CGColorCreateGenericRGB: true
   CGRectGetMaxY: true
@@ -17,33 +14,64 @@ globals:
   NSOnState: true
   NSSwitchButton: true
   NSHomeDirectory: true
+  NSStringPboardType: true
+  document: true
+  window: true
+
+plugins:
+  - react
+
+parser: babel-eslint
 
 settings:
-  import/core-modules: [
-    'sketch/ui',
-    'sketch/dom',
-    'sketch/settings'
-  ]
+  import/resolver:
+    webpack:
+      config: 'webpack.skpm.config.js'
+    node:
+      paths:
+        - src
+  import/core-modules:
+    - sketch/ui
+    - sketch/dom
+    - sketch/settings
 
 rules:
+  import/prefer-default-export: off
   no-param-reassign: off
-  consistent-return: off
-  import/no-dynamic-require: off
-  global-require: off
   no-console: off
   arrow-parens:
     - error
     - as-needed
     - requireForBlockBody: true
+  object-curly-spacing:
+    - error
+    - always
+  array-bracket-spacing:
+    - error
+    - always
   template-curly-spacing:
     - error
     - always
-  indent:
-    - error
-    - 2
   semi:
     - error
     - never
   comma-dangle:
     - error
     - never
+  keyword-spacing:
+    - error
+    - before: true
+      after: true
+      overrides:
+        return:
+          after: true
+        throw:
+          after: true
+        case:
+          after: true
+  react/jsx-curly-spacing:
+    - error
+    - when: always
+      attributes:
+        allowMultiline: true
+      children: true
