@@ -21,6 +21,7 @@
     "build": "skpm-build",
     "watch": "skpm-build --watch",
     "start": "skpm-build --watch --run",
+    "publish": "skpm publish",
     "postinstall": "npm run build && skpm-link",
     "precommit": "lint-staged",
     "lint": "yarn lint:webview && yarn lint:plugin",
