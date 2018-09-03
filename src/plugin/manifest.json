@@ -1,7 +1,7 @@
 {
   "compatibleVersion": 3,
   "bundleVersion": 1,
-  "icon": "icon.png",
+  "icon": "assets/icons/mark.png",
   "commands": [
     {
       "name": "Automatically Typeset Text Layers",
@@ -10,54 +10,54 @@
           "SelectionChanged.finish": "onSelectionFinish"
         }
       },
-      "script": "./commands/auto.js"
+      "script": "commands/auto.js"
     },
     {
       "name": "Set Character Spacing",
       "description": "Set selected text layer's character spacing if the typesettings are registered.",
       "shortcut" : "cmd shift →",
-      "icon": "icons/setLineHeight.png",
+      "icon": "assets/icons/characterSpacingRunner.png",
       "handlers": {
         "run": "onSetCharacterSpacing"
       },
-      "identifier": "typeset.characterSpacing",
-      "script": "./commands/typeset.js"
+      "identifier": "typesetCharacterSpacing",
+      "script": "commands/typeset.js"
     },
     {
       "name": "Set Line Height",
       "description": "Set selected text layer's line height if the typesettings are registered.",
       "shortcut" : "cmd shift ↓",
-      "icon": "icons/setLineHeight.png",
+      "icon": "assets/icons/lineHeightRunner.png",
       "handlers": {
         "run": "onSetLineHeight"
       },
-      "identifier": "typeset.lineHeight",
-      "script": "./commands/typeset.js"
+      "identifier": "typesetLineHeight",
+      "script": "commands/typeset.js"
     },
     {
       "name": "Register Typesettings",
       "description": "Register typsettings of all selected layers.",
       "shortcut" : "ctrl alt cmd ↩",
-      "icon": "icons/setLineHeight.png",
-      "identifier": "register.typesettings",
-      "script": "./commands/register.js"
+      "icon": "assets/icons/registerRunner.png",
+      "identifier": "registerTypesettings",
+      "script": "commands/register.js"
     },
     {
       "name": "Preferences",
       "description": "Manage your Typesettings Plugin preferences.",
       "shortcut" : "ctrl alt cmd t",
-      "icon": "icons/setLineHeight.png",
+      "icon": "assets/icons/mark.png",
       "identifier": "preferences",
-      "script": "./commands/preferences.js"
+      "script": "commands/preferences.js"
     }
   ],
   "menu": {
     "title": "Typesettings",
     "items": [
-      "typeset.characterSpacing",
-      "typeset.lineHeight",
+      "typesetCharacterSpacing",
+      "typesetLineHeight",
       "-",
-      "register.typesettings",
+      "registerTypesettings",
       "preferences"
     ]
   }

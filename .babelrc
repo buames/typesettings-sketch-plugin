@@ -1,0 +1,6 @@
+{
+  "plugins": [
+    "@emotion/babel-plugin-core",
+    "@babel/plugin-proposal-class-properties"
+  ]
+}
