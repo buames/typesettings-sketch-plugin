@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from '@emotion/styled'
-import pluginCall from 'sketch-module-web-view/client'
 import InlineSVG from 'svg-inline-react'
 import { colors, space } from 'webview/style/variables'
 import markSvg from './mark.svg'
@@ -30,7 +29,7 @@ const Mark = styled(InlineSVG)`
 `
 
 const handleOnClickMark = () => (
-  pluginCall('openUrl', 'https://github.com/buames/typesettings-sketch-plugin')
+  window.postMessage('openUrl', 'https://github.com/buames/typesettings-sketch-plugin')
 )
 
 const PageFooter = () => (

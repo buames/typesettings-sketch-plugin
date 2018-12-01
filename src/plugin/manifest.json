@@ -7,7 +7,7 @@
       "name": "Automatically Typeset Text Layers",
       "handlers": {
         "actions": {
-          "SelectionChanged.finish": "onSelectionFinish"
+          "SelectionChanged": "onSelectionFinish"
         }
       },
       "script": "commands/auto.js"

@@ -19,17 +19,19 @@ export default () => {
     devTools: true
   }
 
-  const window = new BrowserWindow(options)
-  const { webContents } = window
+  const browser = new BrowserWindow(options)
+  const { webContents } = browser
 
   // Only show the window when the page has loaded
-  window.once('ready-to-show', () => {
-    window.show()
+  browser.once('ready-to-show', () => {
+    webContents.executeJavaScript(`preferences=${ JSON.stringify(preferences) }`)
+    webContents.executeJavaScript('ready=true')
+    browser.show()
   })
 
   // Returns the plugin preferences to the webview
   webContents.on('getPreferences', () => {
-    webContents.executeJavaScript(`preferences = ${ JSON.stringify(preferences) }`)
+    webContents.executeJavaScript(`preferences=${ JSON.stringify(preferences) }`)
   })
 
   // Updates the plugin preferences from the webview
@@ -77,5 +79,5 @@ export default () => {
       .openURL(NSURL.URLWithString(url))
   ))
 
-  window.loadURL(WebviewEntry)
+  browser.loadURL(WebviewEntry)
 }

@@ -3,7 +3,6 @@ import React, { Fragment } from 'react'
 import { render } from 'react-dom'
 import { HashRouter } from 'react-router-dom'
 import { renderRoutes } from 'react-router-config'
-import pluginCall from 'sketch-module-web-view/client'
 import { Global } from '@emotion/core'
 import globals from 'webview/style/globals'
 import routes from 'webview/pages'
@@ -26,11 +25,20 @@ document.addEventListener('contextmenu', (e => (
 )))
 
 // Call the sketch plugin to get the current user preferences
-pluginCall('getPreferences')
+window.postMessage('getPreferences')
 
-// Now render the app
-renderApp({
-  preferences: window.preferences
+// Make sure we have the preferences loaded
+setTimeout(() => {
+  if (!window.ready) {
+    const interval = setInterval(() => {
+      if (window.ready) {
+        renderApp({
+          preferences: window.preferences
+        })
+      }
+      clearInterval(interval)
+    }, 100)
+  }
 })
 
 // This is called from the plugin and tells the webview to refresh

@@ -113,9 +113,11 @@ const fetch = (context, layer) => {
 
   // Latest Version
   if (compatibleVersion && compatibleVersion <= version) {
-    if (!typesettings[fontName]
+    if (
+      !typesettings[fontName]
       || !typesettings[fontName][casing]
-      || !typesettings[fontName][casing][fontSize]) {
+      || !typesettings[fontName][casing][fontSize]
+    ) {
       return 'No typesettings registered for the current casing and font size.'
     }
     return typesettings[fontName][casing][fontSize]
@@ -132,9 +134,13 @@ const setType = (layer, settings, opts) => {
   }
 
   if (lineHeight) {
+    // Set the line height before the paragraph spacing so we know we always have an
+    // NSParagraphStyle. In the rare case where you have a null value line height + paragraph
+    // spacing this prevents a setParagraphSpacing is undefined
+    layer.setLineHeight(settings.lineHeight)
+
     layer.style().textStyle().attributes().NSParagraphStyle
       .setParagraphSpacing(settings.paragraphSpacing)
-    layer.setLineHeight(settings.lineHeight)
   }
 }
 

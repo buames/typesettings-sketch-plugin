@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import pluginCall from 'sketch-module-web-view/client'
 import Page from 'webview/components/Page'
 import Button from 'webview/components/Button'
 import Checkbox from 'webview/components/Checkbox'
@@ -9,7 +8,7 @@ import Section from './Section'
 
 class SettingsPage extends Component {
   state = {
-    ...this.props.preferences // eslint-disable-line
+    ...this.props.preferences
   }
 
   static propTypes = {
@@ -41,11 +40,11 @@ class SettingsPage extends Component {
       : target.value
 
     this.state[name] = newPref
-    pluginCall('setPreferences', this.state)
+    window.postMessage('setPreferences', this.state)
   }
 
   handleOnClickDirectoryButton = (evt) => {
-    pluginCall(evt.target.name, this.state)
+    window.postMessage(evt.target.name, this.state)
   }
 
   render() {
