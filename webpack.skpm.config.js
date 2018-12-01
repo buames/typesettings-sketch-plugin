@@ -1,34 +1,24 @@
 const path = require('path')
 
-const context = path.resolve(process.cwd(), 'src')
-
 module.exports = (config, isPluginCommand) => {
-  config.context = context
-  config.resolve.modules.push(context)
+  config.resolve.modules.push(path.resolve('src'))
 
   if (!isPluginCommand) {
-    config.resolve.extensions.push('.json', '.jsx')
     config.module.rules.push({
       test: /\.(html)$/,
       use: [
         { loader: '@skpm/extract-loader' },
-        {
-          loader: 'html-loader',
-          options: {
-            attrs: [
-              'img:src',
-              'link:href'
-            ],
-            interpolate: true
-          }
-        }
+        { loader: 'html-loader' }
       ]
     })
+
     config.module.rules.push({
       test: /\.svg$/,
       use: [
         { loader: 'svg-inline-loader' }
       ]
     })
+
+    config.resolve.extensions.push('.json', '.jsx')
   }
 }

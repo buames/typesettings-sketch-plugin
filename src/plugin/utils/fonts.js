@@ -33,7 +33,8 @@ export const FONT_WEIGHTS = {
 export const isItalicFont = (font) => {
   const traits = font.fontDescriptor().objectForKey(NSFontTraitsAttribute)
   const symbolicTraits = traits[NSFontSymbolicTrait].unsignedIntValue()
-  return (symbolicTraits & NSFontItalicTrait) !== 0 //eslint-disable-line
+  // eslint-disable-next-line
+  return (symbolicTraits & NSFontItalicTrait) !== 0
 }
 
 export const getStyleOfFont = (font) => {
@@ -42,7 +43,8 @@ export const getStyleOfFont = (font) => {
 }
 
 export const getWeightOfFont = (font) => {
-  const appKitWeight = NSFontManager.sharedFontManager().weightOfFont_(font) // eslint-disable-line
+  // eslint-disable-next-line
+  const appKitWeight = NSFontManager.sharedFontManager().weightOfFont_(font)
   return FONT_WEIGHTS[appKitWeight]
 }
 

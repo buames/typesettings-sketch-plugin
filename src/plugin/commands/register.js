@@ -7,7 +7,8 @@ import { MIN_VERSION } from 'plugin/storage'
 import { getJSTextLayers, pluck } from 'plugin/utils/helpers'
 
 const mergeOptions = {
-  arrayMerge: (destinationArray, sourceArray, options) => sourceArray // eslint-disable-line
+  // eslint-disable-next-line
+  arrayMerge: (destinationArray, sourceArray, options) => sourceArray
 }
 
 export default (context) => {
@@ -100,9 +101,13 @@ export default (context) => {
 
     // Typesettings for not exists. Let's write them all out.
     fs.writeFileSync(filePath, JSON.stringify(settings, null, 2))
+
     return `Registered ${ settings.family } typesettings`
   })
 
-  const msg = (done.length === 1) ? done.join('') : `Registered typesettings for ${ done.length } fonts`
+  const msg = (done.length === 1)
+    ? done.join('')
+    : `Registered typesettings for ${ done.length } fonts`
+
   return UI.message(msg)
 }
