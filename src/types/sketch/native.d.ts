@@ -1,0 +1,11 @@
+declare class MSBitmapLayer { }
+declare class MSDocument { }
+declare class MSHotspotLayer { }
+declare class MSLayer { }
+declare class MSLayerGroup { }
+declare class MSPage { }
+declare class MSShapeGroup { }
+declare class MSShapePathLayer { }
+declare class MSStyle { }
+declare class MSStyledLayer { }
+declare class MSSymbolInstance { }

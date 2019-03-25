@@ -25,7 +25,8 @@ const filePath = (fontFamily) => {
   return `${ NSHomeDirectory() }/${ userDirPath }`
 }
 
-const transform = (textLayer) => {
+export const transform = (textLayer) => {
+  console.log(textLayer)
   const layer = textLayer.sketchObject || textLayer
   const attrs = layer.style().textStyle().attributes()
 

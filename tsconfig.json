@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
     "rootDir": ".",
     "jsx": "react",
     "module": "esnext",
@@ -17,7 +17,16 @@
     "removeComments": true,
     "sourceMap": false,
     "skipLibCheck": false,
-    "typeRoots": [ "node_modules/@types" ]
+    "paths": {
+      "assets/*": ["assets/*"],
+      "directory/*": ["directory/*"],
+      "plugin/*": ["plugin/*"]
+    },
+    "typeRoots": [
+      "node_modules/@types",
+      "src/types/cocoa.d.ts",
+      "src/types/sketch/*.d.ts"
+    ]
   },
   "include": [
     "src"

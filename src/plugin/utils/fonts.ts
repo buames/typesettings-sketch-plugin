@@ -30,24 +30,22 @@ export const FONT_WEIGHTS = {
   12: 900
 }
 
-export const isItalicFont = (font) => {
+export const isItalicFont = (font: NSFont) => {
   const traits = font.fontDescriptor().objectForKey(NSFontTraitsAttribute)
   const symbolicTraits = traits[NSFontSymbolicTrait].unsignedIntValue()
-  // eslint-disable-next-line
   return (symbolicTraits & NSFontItalicTrait) !== 0
 }
 
-export const getStyleOfFont = (font) => {
+export const getStyleOfFont = (font: NSFont) => {
   const isItalic = isItalicFont(font) ? 1 : 0
   return FONT_STYLES[isItalic]
 }
 
-export const getWeightOfFont = (font) => {
-  // eslint-disable-next-line
+export const getWeightOfFont = (font: NSFont) => {
   const appKitWeight = NSFontManager.sharedFontManager().weightOfFont_(font)
   return FONT_WEIGHTS[appKitWeight]
 }
 
-export const getLetterCasing = attrs => (
+export const getLetterCasing = (attrs: MSTextStyle['attributes']) => (
   TEXT_TRANSFORM[attrs.MSAttributedStringTextTransformAttribute || 0]
 )
