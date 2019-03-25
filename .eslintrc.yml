@@ -22,6 +22,11 @@ settings:
     node:
       paths:
         - src
+      extensions:
+        - ".ts"
+        - ".tsx"
+        - ".js"
+        - ".jsx"
   import/core-modules:
     - sketch/ui
     - sketch/dom

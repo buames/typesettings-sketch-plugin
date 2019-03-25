@@ -1,5 +1,6 @@
 const path = require('path')
 
+// TODO: Minimize for production
 module.exports = (config, isPluginCommand) => {
   config.resolve.modules.push(path.resolve('src'))
 
@@ -13,12 +14,15 @@ module.exports = (config, isPluginCommand) => {
     })
 
     config.module.rules.push({
-      test: /\.svg$/i,
-      use: [
-        { loader: 'svg-inline-loader' }
-      ]
+      test: /\.svg$/,
+      loader: 'svg-inline-loader'
     })
-
-    config.resolve.extensions.push('.json', '.jsx')
   }
+
+  config.module.rules.push({
+    test: /\.(ts|tsx)$/,
+    loader: 'babel-loader'
+  })
+
+  config.resolve.extensions.push('.json', '.jsx', '.ts', '.tsx')
 }
