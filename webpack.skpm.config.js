@@ -5,7 +5,7 @@ module.exports = (config, isPluginCommand) => {
 
   if (!isPluginCommand) {
     config.module.rules.push({
-      test: /\.(html)$/,
+      test: /\.(html)$/i,
       use: [
         { loader: '@skpm/extract-loader' },
         { loader: 'html-loader' }
@@ -13,7 +13,7 @@ module.exports = (config, isPluginCommand) => {
     })
 
     config.module.rules.push({
-      test: /\.svg$/,
+      test: /\.svg$/i,
       use: [
         { loader: 'svg-inline-loader' }
       ]

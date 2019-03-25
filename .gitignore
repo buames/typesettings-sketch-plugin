@@ -1,8 +1,20 @@
-dist
-build
+# dependencies
 node_modules
+*.lock
+
+# build
+build
+dist
+typesettings.sketchplugin
+
+# test
+.nyc_output
+coverage
+coverage.lcov
+
+# logs
 .npm
 *.log
-*.lock
+
+# dumb
 .DS_Store
-typesettings.sketchplugin

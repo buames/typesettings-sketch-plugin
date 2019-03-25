@@ -6,8 +6,8 @@ const globals = css`
   }
 
   html {
-    line-height: 1.15; 
-    font-size: 100%; 
+    line-height: 1.15;
+    font-size: 100%;
   }
 
   html,
