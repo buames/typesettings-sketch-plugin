@@ -1,7 +1,6 @@
 extends:
   - sketch
-  - airbnb
-  - plugin:import/errors
+  - '@postmates'
 
 globals:
   CGColorCreateGenericRGB: true

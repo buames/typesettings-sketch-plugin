@@ -21,7 +21,7 @@
         "run": "onSetCharacterSpacing"
       },
       "identifier": "typesetCharacterSpacing",
-      "script": "commands/typeset.js"
+      "script": "commands/typeset.ts"
     },
     {
       "name": "Set Line Height",
@@ -32,7 +32,7 @@
         "run": "onSetLineHeight"
       },
       "identifier": "typesetLineHeight",
-      "script": "commands/typeset.js"
+      "script": "commands/typeset.ts"
     },
     {
       "name": "Register Typesettings",

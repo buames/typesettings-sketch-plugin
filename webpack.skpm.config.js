@@ -21,8 +21,14 @@ module.exports = (config, isPluginCommand) => {
 
   config.module.rules.push({
     test: /\.(ts|tsx)$/,
-    loader: 'babel-loader'
+    loader: 'babel-loader',
+    exclude: [ /node_modules/ ]
   })
 
-  config.resolve.extensions.push('.json', '.jsx', '.ts', '.tsx')
+  config.resolve.extensions = [
+    ...config.resolve.extensions,
+    '.jsx',
+    '.ts',
+    '.tsx'
+  ]
 }

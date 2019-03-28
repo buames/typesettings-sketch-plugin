@@ -51,12 +51,15 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.3.3",
     "@emotion/babel-preset-css-prop": "^10.0.9",
+    "@postmates/eslint-config": "^4.0.1",
     "@skpm/builder": "^0.5.16",
     "@skpm/extract-loader": "^2.0.2",
+    "@types/node": "^11.12.0",
+    "@typescript-eslint/eslint-plugin": "^1.5.0",
+    "@typescript-eslint/parser": "^1.5.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
     "eslint": "^5.15.3",
-    "eslint-config-airbnb": "^17.1.0",
     "eslint-config-sketch": "^0.2.4",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
@@ -64,10 +67,12 @@
     "html-loader": "^0.5.5",
     "husky": "^1.3.1",
     "lint-staged": "^8.1.5",
+    "react-router": "^5.0.0",
     "sketch.d.ts": "buames/Sketch.d.ts",
     "skpm": "^1.1.15",
     "svg-inline-loader": "^0.8.0",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.3.4000",
+    "webpack": "^4.29.6"
   },
   "lint-staged": {
     "*{.js,.jsx}": [

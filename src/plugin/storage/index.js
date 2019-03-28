@@ -5,7 +5,7 @@ export const MIN_VERSION = '0.0.3'
 
 export const preferences = {
   pluginDefinedDirectory: isDev
-    ? `${ NSHomeDirectory() }/Development/typesettings-sketch-plugin/src/directory`
+    ? `${ NSHomeDirectory() }/Development/typesettings/typesettings-sketch-plugin/src/directory`
     : `${ NSHomeDirectory() }/Library/Application Support/com.bohemiancoding.sketch3/Plugins/typesettings.sketchplugin/Contents/Resources`,
   userDefinedDirectory: Settings.settingForKey('userDefinedDirectory') || `${ NSHomeDirectory() }/Desktop`,
   allowsAutoKerning: Settings.settingForKey('allowsAutoKerning') || false,

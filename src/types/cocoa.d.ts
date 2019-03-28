@@ -1,28 +1,3 @@
-// Constants
-// declare const enum NSFontSymbolicTrait {
-// 	TraitItalic = 1,
-// 	TraitBold = 2,
-// 	TraitExpanded = 32,
-// 	TraitCondensed = 64,
-// 	TraitMonoSpace = 1024,
-// 	TraitVertical = 2048,
-// 	TraitUIOptimized = 4096,
-// 	TraitTightLeading = 32768,
-// 	TraitLooseLeading = 65536,
-// 	ClassMask = 4026531840,
-// 	ClassUnknown = 0,
-// 	ClassOldStyleSerifs = 268435456,
-// 	ClassTransitionalSerifs = 536870912,
-// 	ClassModernSerifs = 805306368,
-// 	ClassClarendonSerifs = 1073741824,
-// 	ClassSlabSerifs = 1342177280,
-// 	ClassFreeformSerifs = 1879048192,
-// 	ClassSansSerif = 2147483648,
-// 	ClassOrnamentals = 2415919104,
-// 	ClassScripts = 2684354560,
-// 	ClassSymbolic = 3221225472
-// }
-
 declare class NSArray<T = NSObject> {
   [index: number]: T;
   count(): number;
