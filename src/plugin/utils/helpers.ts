@@ -1,4 +1,8 @@
-export const enum TextTransform {
+import sketch from 'sketch'
+
+export const compatibleVersion = '0.3.0'
+
+export enum TextTransform {
   none = 'normalcase',
   uppercase = 'uppercase',
   lowercase = 'lowercase'
@@ -17,6 +21,22 @@ export const fontWeights = {
   10: 800,
   12: 900
 }
+
+export const getVersion = (context: SketchContext): {
+    /* plugin version used to save { typesettings }.json */
+    readonly plugin: string,
+    /* sketch api version used to save { typesettings }.json */
+    readonly api: string;
+    /* sketch version used to save { typesettings }.json */
+    readonly sketch: string;
+    /* min plugin version to load { typesettings }.json */
+    readonly compatibleVersion: string;
+} => ({
+  plugin: context.plugin.version().UTF8String(),
+  sketch: sketch.version.sketch,
+  api: sketch.version.api,
+  compatibleVersion
+})
 
 // eslint-disable-next-line
 export const isDev = process.env.NODE_ENV !== 'production'

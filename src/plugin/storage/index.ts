@@ -1,6 +1,7 @@
 import Settings from 'sketch/settings'
 import { isDev } from '../utils/helpers'
 
+// min plugin version to load typesettings.json
 export const MIN_VERSION = '0.0.3'
 
 interface Preferences {

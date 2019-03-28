@@ -28,25 +28,16 @@ const getFilepath = (fontFamily: string) => {
   return `${ NSHomeDirectory() }/${ userDirPath }`
 }
 
-// export const transform = (textLayer: Text) => {
-//   console.log(textLayer)
+// export const getSketchStyles = (textLayer: Text) => {
 //   const layer = textLayer.sketchObject || textLayer
-//   const attrs = layer.style().textStyle().attributes()
-
+//   const attrs =
 //   return {
-//     fontFamily: String(attrs.NSFont.familyName()),
 //     fontName: String(attrs.NSFont.fontName()),
 //     fontDisplayName: String(attrs.NSFont.displayName()),
 //     fontPostscriptName: String(layer.fontPostscriptName()),
-//     fontSize: Number(layer.fontSize()),
-//     fontStyle: String(getStyleOfFont(attrs.NSFont)),
-//     fontWeight: Number(getWeightOfFont(attrs.NSFont)),
-//     casing: getLetterCasing(attrs),
 //     characterSpacing: layer.characterSpacing()
 //       ? Number(layer.characterSpacing())
 //       : layer.characterSpacing(),
-//     lineHeight: Number(layer.lineHeight()),
-//     paragraphSpacing: Number(attrs.NSParagraphStyle.paragraphSpacing())
 //   }
 // }
 
@@ -72,7 +63,7 @@ const toVariant = textLayer => ({
   }
 })
 
-const getTextStyles = (layer: Text) => {
+const getSketchTextStyles = (layer: Text) => {
   const { style } = layer
   return {
     fontFamily: style.fontFamily,
@@ -94,7 +85,7 @@ const getTextStyles = (layer: Text) => {
 // Returns typesettings for a given text layer
 let typesettings = null
 const fetch = (layer: Text) => {
-  const styles = getTextStyles(layer)
+  const styles = getSketchTextStyles(layer)
   const filepath = getFilepath(styles.fontFamily)
 
   if (!typesettings || (typesettings && typesettings.fontFamily !== styles.fontFamily)) {
@@ -109,26 +100,56 @@ const fetch = (layer: Text) => {
     }
   }
 
-
   const version = sketch.version.sketch
+  const apiVersion = sketch.version.api
   const { compatibleVersion } = typesettings
 
-  // Check if the settings are compatible. (v0.0.2 and below will not have a compatibleVersion)
-  if (!compatibleVersion || compatibleVersion < Number(MIN_VERSION)) {
+  // v0.0.2 and below will not have a compatibleVersion
+  if (!compatibleVersion) {
     return 'Your typesettings not compatible. You\'ll need to re-register you typesettings.'
+  }
+
+  // Check if the settings are compatible.
+  // Case 1: v0.2.0 typesettings.json shape changed in plugin v0.3.0, so my typesettings are outdated
+  if (!compatibleVersion || compatibleVersion < Number(MIN_VERSION)) {
+    console.log('sketchVersion =', version)
+    console.log('compatibleVersion =', compatibleVersion)
+    return 'Your typesettings not compatible. You\'ll need to re-register you typesettings.'
+  }
+
+  // Check for older typesettings shape version
+  if (!compatibleVersion || compatibleVersion === Number(MIN_VERSION)) {
+    console.log('Found older typesettings shape version')
+    console.log('> sketchVersion =', version)
+    console.log('> compatibleVersion =', compatibleVersion)
+
+    // if (
+    //   !typesettings[String(layer.sketchObject.style().textStyle().attributes().NSFont.fontName())]
+    //   || !typesettings[fontName][casing]
+    //   || !typesettings[fontName][casing][fontSize]
+    // ) {
+    //   return 'No typesettings registered for the current casing and font size.'
+    // }
+    // return typesettings[fontName][casing][fontSize]
+
   }
 
   // Check if the typesettings version is incompatible bc the plugin is too old
   if (compatibleVersion && compatibleVersion > version) {
+    console.log('Typesettings version is incompatible bc the plugin is too old')
+    console.log('> sketchVersion =', version)
+    console.log('> compatibleVersion =', compatibleVersion)
     return 'Your plugin is out of date. Please update to the latest version of Typesettings.'
   }
 
-  // // Latest Version
+  // Latest Version
   // if (compatibleVersion && compatibleVersion <= version) {
   //   if (
-  //     !typesettings[fontName]
-  //     || !typesettings[fontName][casing]
-  //     || !typesettings[fontName][casing][fontSize]
+  //     !typesettings[styles.fontFamily]
+  //     || !typesettings[styles.fontFamily].variants
+  //     // TODO: Need to try to 'pluck' the variant object to check if the casing + size exists
+  //     // || !typesettings[fontName][casing]
+  //     // || !typesettings[fontName][casing][fontSize]
   //   ) {
   //     return 'No typesettings registered for the current casing and font size.'
   //   }
@@ -159,6 +180,7 @@ const setType = (layer, settings, opts) => {
 const Typesetter = {
   getFilepath,
   // transform,
+  getSketchTextStyles,
   toVariant,
   fetch,
   setType

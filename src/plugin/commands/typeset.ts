@@ -1,6 +1,6 @@
-import UI from 'sketch/ui'
+import ui from 'sketch/ui'
 import dom, { AllLayers } from 'sketch/dom'
-import Typesetter from 'plugin/Typesetter'
+import typesetter from 'plugin/Typesetter'
 import { is } from 'plugin/utils/is'
 
 const typeset = (opts) => {
@@ -13,13 +13,13 @@ const typeset = (opts) => {
     return 'You need to select atleast 1 text layer'
   }
 
-  selection.forEach((layer: AllLayers) => {
+  selection.forEach((layer:AllLayers) => {
     if (is.textLayer(layer)) {
-      const settings = Typesetter.fetch(layer)
+      const settings = typesetter.fetch(layer)
 
-      if (settings === 'string') {
+      if (is.string(settings)) {
         counter.skipped += 1
-        UI.message(settings)
+        ui.message(settings)
         return
       }
 
@@ -56,7 +56,7 @@ export const onSetCharacterSpacing = () => {
     setLineHeight: false
   })
 
-  UI.message(done)
+  ui.message(done)
 }
 
 // // onRun Typset Line Height

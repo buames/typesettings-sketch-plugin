@@ -2456,9 +2456,9 @@ declare module "sketch" {
     export import Async = async;
     export import DataSupplier = data;
 
-    export type Context = SketchContext;
-    export type ActionContext<T extends MSAction> = SketchActionContext<T>;
+    export type Context = SketchContext
   }
+
   export = sketch;
 }
 
@@ -2470,13 +2470,4 @@ declare interface SketchContext {
   scriptPath: string;
   scriptURL: NSURL;
   selection: NSArray;
-}
-
-declare interface SketchActionContext<T extends MSAction> extends SketchContext {
-  actionContext: {
-    document: MSDocument;
-    action?: T;
-    exports?: { path: string; request: MSExportRequest }[];
-  };
-  action: string;
 }

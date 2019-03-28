@@ -7,10 +7,10 @@
       "name": "Automatically Typeset Text Layers",
       "handlers": {
         "actions": {
-          "SelectionChanged": "onSelectionFinish"
+          "SelectionChanged.finish": "onSelectionFinish"
         }
       },
-      "script": "commands/auto.js"
+      "script": "commands/auto.ts"
     },
     {
       "name": "Set Character Spacing",
@@ -40,7 +40,7 @@
       "shortcut" : "ctrl alt cmd ↩",
       "icon": "assets/icons/registerRunner.png",
       "identifier": "registerTypesettings",
-      "script": "commands/register.js"
+      "script": "commands/register.ts"
     },
     {
       "name": "Preferences",
@@ -48,7 +48,7 @@
       "shortcut" : "ctrl alt cmd t",
       "icon": "assets/icons/mark.png",
       "identifier": "preferences",
-      "script": "commands/preferences.js"
+      "script": "commands/preferences.ts"
     }
   ],
   "menu": {
