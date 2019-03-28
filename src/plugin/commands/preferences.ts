@@ -1,5 +1,5 @@
 import dialog from '@skpm/dialog'
-import UI from 'sketch/ui'
+import ui from 'sketch/ui'
 import BrowserWindow from 'sketch-module-web-view'
 import WebviewEntry from 'webview/index.html'
 import { preferences, savePreferences } from 'plugin/storage'
@@ -63,8 +63,8 @@ export default () => {
   webContents.on('copyUserDefinedDirectoryPath', () => {
     const pasteboard = NSPasteboard.generalPasteboard()
     pasteboard.clearContents()
-    pasteboard.setString_forType_(preferences.userDefinedDirectory, NSStringPboardType) // eslint-disable-line
-    UI.message('Copied to clipboard!')
+    pasteboard.setString_forType_(preferences.userDefinedDirectory, NSPasteboardTypeString) // eslint-disable-line
+    ui.message('Copied to clipboard!')
   })
 
   // Copies the userDefinedDirectory to the clipboard
@@ -74,7 +74,7 @@ export default () => {
   ))
 
   // Open an external url
-  webContents.on('openUrl', url => (
+  webContents.on('openUrl', (url: NSURL) => (
     NSWorkspace.sharedWorkspace()
       .openURL(NSURL.URLWithString(url))
   ))

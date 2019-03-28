@@ -2393,12 +2393,15 @@ declare module "sketch" {
   import settings = require("sketch/settings");
   import async = require("sketch/async");
   import data = require("sketch/data-supplier");
+
   class sketch {
     static export: typeof dom.export;
   }
+
   namespace sketch {
     export const version: { readonly api: string; readonly sketch: string };
     // it'd be really nice if we could export * from dom, but https://github.com/Microsoft/TypeScript/issues/4336
+    export import AllLayers = dom.AllLayers;
     export import Types = dom.Types;
     export import getSelectedDocument = dom.getSelectedDocument;
     export import getDocuments = dom.getDocuments;
@@ -2449,11 +2452,8 @@ declare module "sketch" {
 
     // other modules that are exposed as sub-modules
     export import UI = ui;
-
     export import Settings = settings;
-
     export import Async = async;
-
     export import DataSupplier = data;
 
     export type Context = SketchContext;

@@ -11,7 +11,9 @@ declare class MSHotspotLayer { }
 declare class MSLayer { }
 declare class MSLayerGroup { }
 declare class MSPage { }
-declare class MSPluginBundle { }
+declare class MSPluginBundle {
+  version<R = NSString>(): R;
+}
 declare class MSPluginCommand { }
 declare class MSImageData { }
 declare class MSShapeGroup { }
@@ -34,11 +36,7 @@ declare class MSTextStyle {
 
 declare class CGPoint { }
 declare class CGRect { }
-
-declare const NSFontSymbolicTrait: any;
-declare const NSFontItalicTrait: 1
-declare const NSFontBoldTrait: 2
-declare const NSFontTraitsAttribute: any;
+declare class CGSize { }
 
 declare class NSArray<T = NSObject> {
   [index: number]: T;
@@ -49,6 +47,7 @@ declare class NSData { }
 declare class NSDictionary<T = any> {
   [key: string]: T;
 }
+declare class NSException { }
 declare class NSFont extends NSObject  {
 	fontDescriptor(): NSFontDescriptor
 }
@@ -60,10 +59,22 @@ declare class NSFontManager extends NSObject {
   weightOfFont_(font: NSFont): any;
 }
 declare class NSImage { }
+declare class NSPanel { }
+declare const NSPasteboardTypeString: string;
+declare class NSPasteboard {
+  static generalPasteboard(): any;
+}
 declare class NSRange { }
 declare class _NSRange { }
 declare class NSObject { }
-declare class NSString { }
-declare class NSURL { }
+declare class NSString {
+  UTF8String<R = string>(): R;
+}
+declare class NSURL {
+  static URLWithString<R = string>(url: NSURL): R;
+}
+declare class NSWorkspace {
+  static sharedWorkspace(): any;
+}
 
 declare function NSHomeDirectory(): string

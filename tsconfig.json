@@ -20,7 +20,8 @@
     "paths": {
       "assets/*": ["assets/*"],
       "directory/*": ["directory/*"],
-      "plugin/*": ["plugin/*"]
+      "plugin/*": ["plugin/*"],
+      "webview/*": ["webview/*"]
     },
     "typeRoots": [
       "node_modules/@types"
