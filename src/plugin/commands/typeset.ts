@@ -1,11 +1,7 @@
 import UI from 'sketch/ui'
-import dom, { AllLayers, ShapePath, Text } from 'sketch/dom'
+import dom, { AllLayers } from 'sketch/dom'
 import Typesetter from 'plugin/Typesetter'
-
-const is = {
-  textLayer: (layer: AllLayers): layer is Text => layer.type === 'Text',
-  shapePath: (layer: AllLayers): layer is ShapePath => layer.type === 'ShapePath'
-}
+import { is } from 'plugin/utils/is'
 
 const typeset = (opts) => {
   // const { setCharacterSpacing, setLineHeight } = opts
