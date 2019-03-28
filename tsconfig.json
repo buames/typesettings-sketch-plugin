@@ -23,9 +23,7 @@
       "plugin/*": ["plugin/*"]
     },
     "typeRoots": [
-      "node_modules/@types",
-      "src/types/cocoa.d.ts",
-      "src/types/sketch/*.d.ts"
+      "node_modules/@types"
     ]
   },
   "include": [
