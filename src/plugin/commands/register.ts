@@ -1,4 +1,4 @@
-import UI from 'sketch/ui'
+import ui from 'sketch/ui'
 import { Context } from 'sketch'
 import dom, { AllLayers } from 'sketch/dom'
 import fs from '@skpm/fs'
@@ -9,7 +9,6 @@ import { MIN_VERSION } from 'plugin/storage'
 import { pluck, getVersion } from 'plugin/utils/helpers'
 
 const mergeOptions = {
-  // eslint-disable-next-line
   arrayMerge: (_: any, sourceArray) => sourceArray
 }
 
@@ -18,20 +17,31 @@ export default (context: Context) => {
   const selection = document.selectedLayers.layers
 
   if (selection.length === 0) {
-    return UI.message('You need to select atleast 1 text layer')
+    return ui.message('You need to select atleast 1 text layer')
   }
 
   const version = getVersion(context)
-  const textLayers = selection.map(Typesetter.getSketchTextStyles)
+  const textLayers = selection.map(Typesetter.getStylesFromSketch)
 
   // Get all of the selected font families from the styles obj
   const families = pluck(textLayers, 'fontFamily')
 
-  // Create the typesettings for each font family
-  const typesettings = families.map((family) => {
+  // Create the typesettings for each font family found in the selection
+  const typesettings = families.map((family: string) => {
     const fonts = textLayers.filter(layer => layer.fontFamily === family)
 
-    console.log(fonts)
+    // const variants = merge.all(fonts.map(Typesetter.toVariant), mergeOptions)
+    const variants = merge.all(fonts.map(Typesetter.toVariant), mergeOptions)
+
+    return {
+      family,
+      variants,
+      lastUpdated: new Date().toISOString(), // last date that the { typesettings }.json were saved
+      pluginVersion: version.plugin,
+      sketchAppVersion: version.sketch,
+      sketchApiVersion: version.api,
+      compatibleVersion: version.compatibleVersion
+    }
 
     // const variants = merge.all(fonts.map(Typesetter.toVariant), mergeOptions)
     // return {
@@ -44,6 +54,9 @@ export default (context: Context) => {
     //   compatibleVersion: version.compatibleVersion
     // }
   })
+
+  console.log(typesettings)
+
 
   // // Replace or update the typesettings
   // const done = typesettings.map((settings) => {

@@ -1,6 +1,6 @@
 import fs from '@skpm/fs'
 import sketch from 'sketch'
-import { Text } from 'sketch/dom'
+import { Text, Style } from 'sketch/dom'
 // import {
 //   getLetterCasing,
 //   getStyleOfFont,
@@ -41,51 +41,42 @@ const getFilepath = (fontFamily: string) => {
 //   }
 // }
 
-const toVariant = textLayer => ({
-  [textLayer.fontName]: {
-    fontFamily: textLayer.fontFamily,
-    fontName: textLayer.fontName,
-    fontWeight: textLayer.fontWeight,
-    fontStyle: textLayer.fontStyle,
-    sources: {
-      locals: [
-        textLayer.fontDisplayName,
-        textLayer.fontPostscriptName
-      ]
-    },
-    [textLayer.casing]: {
-      [textLayer.fontSize]: {
-        characterSpacing: textLayer.characterSpacing,
-        lineHeight: textLayer.lineHeight,
-        paragraphSpacing: textLayer.paragraphSpacing
-      }
-    }
-  }
+const mappedTextTransform = (style: Partial<Style>) => (
+  style.textTransform === 'none' ? 'normalcase' : style.textTransform
+)
+
+const toVariant = (style: Partial<Style>) => ({
+  fontWeight: style.fontWeight,
+  fontStyle: style.fontStyle,
+  sources: {
+    // locals: [
+    //   textLayer.fontDisplayName,
+    //   textLayer.fontPostscriptName
+    // ]
+  },
+  [mappedTextTransform(style)]: style
 })
 
-const getSketchTextStyles = (layer: Text) => {
+const getStylesFromSketch = (layer: Text): Partial<Style> => {
   const { style } = layer
   return {
     fontFamily: style.fontFamily,
-    fontSize: style.fontSize,
-    fontWeight: style.fontWeight,
     fontStyle: style.fontStyle,
     fontVariant: style.fontVariant,
     fontStretch: style.fontStretch,
-    kerning: style.kerning,
-    textStrikethrough: style.textStrikethrough,
+    fontSize: style.fontSize,
+    fontWeight: style.fontWeight,
     textTransform: style.textTransform,
-    textUnderline: style.textUnderline,
-    paragraphSpacing: style.paragraphSpacing,
-    verticalAlignment: style.verticalAlignment,
-    lineHeight: style.lineHeight
+    kerning: style.kerning,
+    lineHeight: style.lineHeight,
+    paragraphSpacing: style.paragraphSpacing
   }
 }
 
 // Returns typesettings for a given text layer
 let typesettings = null
 const fetch = (layer: Text) => {
-  const styles = getSketchTextStyles(layer)
+  const styles = getStylesFromSketch(layer)
   const filepath = getFilepath(styles.fontFamily)
 
   if (!typesettings || (typesettings && typesettings.fontFamily !== styles.fontFamily)) {
@@ -180,7 +171,7 @@ const setType = (layer, settings, opts) => {
 const Typesetter = {
   getFilepath,
   // transform,
-  getSketchTextStyles,
+  getStylesFromSketch,
   toVariant,
   fetch,
   setType

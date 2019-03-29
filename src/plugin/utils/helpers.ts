@@ -1,4 +1,5 @@
 import sketch from 'sketch'
+import { Style } from 'sketch/dom'
 
 export const compatibleVersion = '0.3.0'
 
@@ -22,6 +23,11 @@ export const fontWeights = {
   12: 900
 }
 
+export const pluck = (arr: Partial<Style>[], prop: keyof Style) => {
+  const mapped = arr.map(item => item[prop])
+  return mapped.filter((value, index, self) => self.indexOf(value) === index)
+}
+
 export const getVersion = (context: SketchContext): {
     /* plugin version used to save { typesettings }.json */
     readonly plugin: string,
@@ -40,11 +46,6 @@ export const getVersion = (context: SketchContext): {
 
 // eslint-disable-next-line
 export const isDev = process.env.NODE_ENV !== 'production'
-
-export const pluck = (arr, prop) => {
-  const mapped = arr.map(item => item[prop])
-  return mapped.filter((value, index, self) => self.indexOf(value) === index)
-}
 
 export const getJSTextLayers = (selection) => {
   if (Array.isArray(selection)) {
